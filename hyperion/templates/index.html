@@ -1,0 +1,24 @@
+<!--Fetch_Layout File-->
+{% extends './shared/base.html' %}
+
+<!--Set_Layout Application Name-->
+{% block app_name %}Hyperion{% endblock %}
+
+<!--Set_Layout Page Title-->
+{% block title %}Student tracker{% endblock %}
+
+<!--Body Content-->
+{% block content %}
+<div class="row">
+    <div class="col-md-1 col-12">
+        {% if user.is_authenticated %}
+            <a class="btn btn-outline-danger mb-2" href="{% url 'hyperion:student_tracker' %}">Sync Students</a>
+        {% endif %}   
+    </div>
+
+    <!--Iframe for Google sheet-->
+    <div class="col-md-9 col-12">
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false" width="1000" height="500"></iframe>
+    </div>
+</div>
+{% endblock %}

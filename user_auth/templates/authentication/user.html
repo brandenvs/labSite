@@ -1,0 +1,14 @@
+<!--Fetch_Layout File-->
+{% extends '../shared/base.html' %}
+
+<!--Set_Layout Application Name-->
+{% block app_name %}User Authentication{% endblock %}
+
+<!--Set_Layout Page Title-->
+{% block title %}User Details - Auth{% endblock %}
+
+<!--Body Content-->
+{% block content %}
+<h1>Welcome back, {{ username }}</h1>
+<a href="{% url 'user_auth:logout_user' %}">Logout</a>
+{% endblock %}
