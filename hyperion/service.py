@@ -34,10 +34,17 @@ class StuRecord:
 
 # Get driver 
 def get_driver(port_url: str) -> webdriver.Edge:
-    driver: webdriver.Edge = webdriver.Edge()
-    options = EdgeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    driver = webdriver.Edge(options=options)
+    # Set up Microsoft Edge options
+    edge_options = EdgeOptions()
+    edge_options.add_argument('--headless')  # Run in headless mode
+    edge_options.add_argument('--disable-gpu')  # Disable GPU for better compatibility
+    edge_options.add_argument('--no-sandbox')  # Bypass OS security model
+    edge_options.add_argument('--disable-dev-shm-usage')  # Overcome limited resource problems
+
+    # Path to msedgedriver (make sure it's correctly installed)
+    driver: webdriver.Edge = webdriver.Edge(options=edge_options, executable_path='/usr/local/bin/msedgedriver')
+
+    edge_options.add_experimental_option('excludeSwitches', ['enable-logging'])
     
     driver.get(port_url)
 
