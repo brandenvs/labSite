@@ -12,9 +12,9 @@ config._find_file(ENV_PATH)
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = True
+DEBUG = bool(config('DEBUG'))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bcodelabs.com', '54.37.74.171']
 
 
 # Application definition
@@ -22,6 +22,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'hyperion',
     'user_auth',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -31,7 +32,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',    
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -39,6 +43,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Loading test/prod settings based on ENV settings
+# ENV = os.environ.get('ENV')
+
+# Cookies
+SESSION_COOKIE_SECURE = True
+
+'''APPLICATION SECURITY SETTINGS'''
+# CORS Policy
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CSRF Tokenization
+CSRF_TRUSTED_ORIGINS = ['https://stadprin.com']
+CSRF_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'labSite.urls'
 
