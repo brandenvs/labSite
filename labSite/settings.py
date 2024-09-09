@@ -55,7 +55,7 @@ SESSION_COOKIE_SECURE = True
 CORS_ALLOW_ALL_ORIGINS = True
 
 # CSRF Tokenization
-CSRF_TRUSTED_ORIGINS = ['https://stadprin.com']
+CSRF_TRUSTED_ORIGINS = ['https://bcodelabs.com']
 CSRF_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'labSite.urls'
