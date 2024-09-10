@@ -42,7 +42,7 @@ def get_driver(port_url: str) -> webdriver.Edge:
     edge_options.add_argument('--disable-dev-shm-usage')  # Overcome limited resource problems
 
     # Path to msedgedriver (make sure it's correctly installed)
-    driver: webdriver.Edge = webdriver.Edge(options=edge_options, executable_path='/usr/local/bin/msedgedriver')
+    driver: webdriver.Edge = webdriver.Edge(options=edge_options)
 
     edge_options.add_experimental_option('excludeSwitches', ['enable-logging'])
     
