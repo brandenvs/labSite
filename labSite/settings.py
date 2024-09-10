@@ -14,7 +14,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = bool(config('DEBUG'))
 
-ALLOWED_HOSTS = ['bcodelabs.com', '54.37.74.171']
+ALLOWED_HOSTS = ['bcodelabs.com', '54.37.74.171', '127.0.0.1']
 
 
 # Application definition

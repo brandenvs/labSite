@@ -113,4 +113,4 @@ def show_user(request):
 # Remove the authenticated user's ID from the request and flush their session data
 def logout_user(request):
     logout(request)
-    return redirect('authentication/login.html')
+    return HttpResponseRedirect(reverse('user_auth:login'))
