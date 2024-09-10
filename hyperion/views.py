@@ -9,7 +9,7 @@ def get_service(request):
     response_code = main()
     
     if response_code == 200:
-        return render(request, 'index.html', {'message': 'wait(10)', 'response': response_code})
+        return HttpResponseRedirect(reverse('hyperion:index'))
 
 def index(request):    
     if request.user.is_authenticated:      
