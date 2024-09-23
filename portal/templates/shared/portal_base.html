@@ -140,17 +140,17 @@
             <button data-mdb-ripple-init type="button" class="btn btn-link px-3 me-2">
               Login
             </button>
-            <button data-mdb-ripple-init type="button" class="btn btn-primary me-3">
-              Sign up for free
-            </button>
+            <a data-mdb-ripple-init type="button" class="btn btn-primary me-3">
+              Sign up
+            </a>
           </div>
         </div>
         {% endif %}
       </div>
     </nav>
 
-    <main role="main" class="container"></main>
-    {% block content %}{% endblock %}
+    <main role="main" class="container">
+      {% block content %}{% endblock %}
     </main>
   </header>
 
