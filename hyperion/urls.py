@@ -5,6 +5,7 @@ from . import views
 app_name = 'hyperion'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.index, name='hd_home'),
     path('service/', views.get_service, name='student_tracker')
+    
 ]

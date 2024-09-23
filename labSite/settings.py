@@ -21,6 +21,7 @@ ALLOWED_HOSTS = ['bcodelabs.com', '54.37.74.171', '127.0.0.1']
 
 INSTALLED_APPS = [
     'hyperion',
+    'portal',
     'user_auth',
     'corsheaders',
     'django.contrib.admin',
@@ -126,17 +127,23 @@ USE_TZ = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [
+    os.path.join(STATIC_ROOT, 'images'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Google auth
+
 # Define the scope for the credentials
-SCOPE = ['https://www.googleapis.com/auth/cloud-platform']  # Example scope
+SCOPE = ['https://www.googleapis.com/auth/cloud-platform']
 
 # Path to the credentials file
 CREDS_FILE = os.path.join(BASE_DIR, 'credentials', 'hd-testing.json')

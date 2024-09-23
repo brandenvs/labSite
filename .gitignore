@@ -1,9 +1,10 @@
 # .gitignore
 /credentials/
 
-/static/
+/static/admin
 
 db.sqlite3
+
 # .env
 .env
 

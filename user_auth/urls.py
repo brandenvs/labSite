@@ -17,7 +17,9 @@ urlpatterns = [
     # URL Pattern - Show user details
     path('show_user/', views.show_user, name='show_user'),
     # URL Pattern - Logout user
-    path('logout_user/', views.logout_user, name='logout_user')
+    path('logout_user/', views.logout_user, name='logout_user'),
+    path('toggle-theme/', views.toggle_theme, name='toggle_theme')
+    
 ]
 
 

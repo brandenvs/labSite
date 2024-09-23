@@ -1,17 +1,38 @@
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout
-from django.shortcuts import redirect
+
+from django.shortcuts import redirect, render
+
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+from .models import UserProfile
 
 app_label = 'user_auth'
+
+@login_required(login_url='user_auth:login')
+def toggle_theme(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    
+    current_theme = str(user_profile.selected_theme )
+    print(user_profile, current_theme)
+    if current_theme == 'light':
+        user_profile.update_theme('dark')
+    else:
+        user_profile.update_theme('light')
+
+    user_profile.save()
+    current_theme = str(user_profile.selected_theme )
+    
+    print(user_profile, current_theme)
+    
+    return HttpResponseRedirect(reverse('portal:index'))
 
 def user_login(request):    
     if request.user.is_authenticated:        
         current_user = request.user
-        return HttpResponseRedirect(reverse('hyperion:index'))
+        return HttpResponseRedirect(reverse('portal:index'))
     else:
         current_user = None
         return render(request, 'authentication/login.html', {'current_user': current_user})
@@ -27,10 +48,11 @@ def create_new_user(request):
         first_name = request.POST.get('firstname')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
+
         try:
             # Create a New User instance and Set Attributes
             new_user = User.objects.create_user(username=username, password=password)
+
             # Set Firstname
             new_user.first_name = first_name
             # Set Is? - Staff
@@ -39,20 +61,25 @@ def create_new_user(request):
             new_user.is_superuser = False
             # Save User to Database
             new_user.save()
+
+            # Associate user profile object
+            UserProfile.objects.create(user=new_user)
+            
             print("Successfully Added New User to Database")
             print(f"USERNAME - {username}\nPassword(raw) - {password}\nFirstname - {first_name}")
             # Redirect User to Profile
-            return HttpResponseRedirect(reverse('user_auth:show_user'))   
+            return HttpResponseRedirect(reverse('user_auth:show_user'))  
+
         # Catch the exception
         except Exception as ex:            
             # Get the Error Message
             error_message = str(ex)
             # Render Create User View and, Pass the Error Message to View
             return render(request, 'authentication/create_user.html', {'error_message': error_message})
-    
+
     # Render Initial Create User View
     return render(request, 'authentication/create_user.html')
-    
+
 # Create User Function(Redirects...)
 def user_create(request):
     if request.method == 'POST':
@@ -70,7 +97,7 @@ def user_create(request):
             # Save user to Db
             user.save()
             # Redirect user
-            return HttpResponseRedirect(reverse('hyperion:index'))
+            return HttpResponseRedirect(reverse('portal:index'))
         except Exception as ex:
             print(f'SOMETHING WENT WRONG!\nError:\n{str(ex)}')
             return render(request, 'authentication/user_create.html', {'error': str(ex)})
@@ -97,7 +124,7 @@ def authenticate_user(request):
     else:
         # Login user 
         login(request, user)
-        return HttpResponseRedirect(reverse('hyperion:index'))
+        return HttpResponseRedirect(reverse('portal:index'))
 
 # Renders View & Model - User Profile
 def show_user(request):
