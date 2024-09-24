@@ -46,12 +46,16 @@ def create_new_user(request):
     if request.method == 'POST':
         # Fetch User Details from Web Page
         first_name = request.POST.get('firstname')
+        last_name = request.POST.get('last_name')
+        
+        email_address = request.POST.get('email_address')        
+
         username = request.POST.get('username')
         password = request.POST.get('password')
 
         try:
             # Create a New User instance and Set Attributes
-            new_user = User.objects.create_user(username=username, password=password)
+            new_user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email_address, password=password)
 
             # Set Firstname
             new_user.first_name = first_name
@@ -61,7 +65,7 @@ def create_new_user(request):
             new_user.is_superuser = False
             # Save User to Database
             new_user.save()
-
+            
             # Associate user profile object
             UserProfile.objects.create(user=new_user)
             
