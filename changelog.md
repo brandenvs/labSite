@@ -1,6 +1,6 @@
 # Changelog for BR Code website
 
-> Entry: 24 Sep 2024
+> Last updated: **24 Sep 2024**
 
 
 ## Key Objectives
@@ -14,6 +14,12 @@
 > - [x] SearXNG *button* doesn't contain `target="_blank"`.
 > - [x] Logo is blurred.
 > - [x] No Icon.
+>
+
+> ### User Auth
+>
+> - [ ] Map Login and Sign-up buttons
+> - [ ] Overhaul forms to suit other site features(**MDB**)
 >
 
 > ### User Profile webpage
@@ -31,3 +37,6 @@
 >
 > - [ ] Navbar: Assign layout their active tab.
 > - [ ] Footer needs to be streamlined and **not sticky**.
+> - [ ] Changing theme: Initial click for user sets the value to default(**light**).*Appropriate theme changes only occur after FIRST click.*
+> - [ ] NavBar: Astro Profile (**Brainstorm**)
+>
