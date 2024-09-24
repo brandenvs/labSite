@@ -1,44 +1,33 @@
-## Changelog for BR Code website
+# Changelog for BR Code website
 
-### Entry: 24 Sep 2024
+> Entry: 24 Sep 2024
 
-#### Todo(Production issues)
 
-- [ ] Build **User Profile** webpage.
-- [ ] LinkedIn *button* `href` **value is incorrect**.
-- [x] WhatsApp *button* `href` **value is incorrect**.
-- [x] SearXNG *button* doesn't contain `target="_blank"`.
-- [ ] Logo is blurred.
-- [ ] No Icon.
+## Key Objectives
 
-#### Features for initial(v1.0) version
+**Refer: [Current Version 1.0](https://bcodelabs.com/)**
 
-> *Below is my proposed features for the stated version.*
+> ### Production issues
+>
+> - [x] LinkedIn *button* `href` **value is incorrect**.
+> - [x] WhatsApp *button* `href` **value is incorrect**.
+> - [x] SearXNG *button* doesn't contain `target="_blank"`.
+> - [x] Logo is blurred.
+> - [x] No Icon.
+>
 
-##### 1. Hyperion Development tab
+> ### User Profile webpage
+> 
+> - [ ] Add Edit functionalities for text fields.
+> - [ ] Add Change functionalities for password field(**Needs to be Secure!**).
+> - [ ] Add Change and Remove functionalities for image fields.
+> - [ ] Add Mailing list functionality(SMTP: *Does not have to actually send a newsletter but **laying the foundational work** is important here*).
+> - [ ] Build **Settings** webpage.
+> - [ ] Build **Message Board** webpage.
+> - [ ] Enhance tabs by animating for profile buttons(My Profile, Message, settings).
+>
 
-- [ ] (fully) Integrate Student Tracker.
-- [ ] (automated) CoGrammer backlog scrapper
-
-##### 2. FyreWatch tab
-
-- [ ] Template application.
-- [ ] Provision new cloud resources and use a sub-domain.
-- [ ] Setup integration for the above.
-
-##### 3. ~~SBG Trader~~
-
-*Scrapped*.
-
-##### 4. Geospatial tab
-
-- [ ] Template application.
-- [ ] R & D.
-- [ ] (first) Integrate *Google EE* / **NASA WorldView**.
-
-#### **GLOBAL** // Layout files (navbar, footer, etc)
-
-| Feat. No. | Task                                                                     | Status |
-| --------- | ------------------------------------------------------------------------ | ------ |
-| 4         | Link all layout files and ensure update is reflected across applications | Done   |
-| *         | Create footer button which links this changelog                          | Done   |
+> ### Non-critical Objectives (Current Version)
+>
+> - [ ] Navbar: Assign layout their active tab.
+> - [ ] Footer needs to be streamlined and **not sticky**.

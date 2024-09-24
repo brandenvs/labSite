@@ -1,12 +1,6 @@
 <!--Fetch_Layout File-->
 {% extends '../shared/auth_base.html' %}
 
-<!--Set_Layout Application Name-->
-{% block app_name %}User Authentication{% endblock %}
-
-<!--Set_Layout Page Title-->
-{% block title %}User Details - Auth{% endblock %}
-
 <!--Body Content-->
 {% block content %}
 <style>
@@ -55,174 +49,175 @@
     }
 </style>
 
-<p class="fs-2 fw-light"><i>Hello There</i> 👋</p>
 
-<div class="card text-center">
-    <div class="card-header d-flex justify-content-end">
-        <ul class="nav nav-pills card-header-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill"
-                    data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
-                    aria-selected="true">My Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages"
-                    type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings"
-                    type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-            </li>
-        </ul>
-    </div>
-    <div class="card-body tab-content" id="v-pills-tabContent">
-        <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile"
-            tabindex="0">
+<div class="container p-2">
+    <div class="card text-center">
+        <div class="card-header d-flex justify-content-end">
+            <ul class="nav nav-pills card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
+                        aria-selected="true">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages"
+                        aria-selected="false">Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings"
+                        aria-selected="false">Settings</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
+                aria-labelledby="v-pills-profile" tabindex="0">
 
-            <div class="row g-4">
-                <!-- First Column -->
-                <div class="col-md-6 col-12">
-                    <div class="row g-4">
+                <div class="row g-4">
+                    <!-- First Column -->
+                    <div class="col-md-6 col-12">
                         <!-- Profile Picture Section -->
-                        <div class="col-md-6 col-12">
+                        <div class="d-flex align-items-center">
                             <!-- Profile Picture -->
                             <div class="me-3">
                                 <p class="mb-0 text-end">Profile Picture</p>
                                 <div class="profile-container">
                                     <div class="bg-image hover-overlay hover-zoom hover-shadow ripple profile-picture">
-                                        <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/113.webp" class="w-100" />
+                                        <img src="https://via.placeholder.com/150" class="w-100" />
                                         <a href="#!">
-                                            <div class="mask" style="background-color: hsla(195, 83%, 58%, 0.2)"></div>
+                                            <div class="mask" style="background-color: hsla(195, 83%, 58%, 0.2)">
+                                            </div>
                                         </a>
                                     </div>
-                                    <!-- <img src="https://via.placeholder.com/150" alt="Profile Picture"
-                                        class="profile-picture"> -->
+                                    <!-- <img src="" alt="Profile Picture"
+                                                class="profile-picture"> -->
+                                </div>
+                            </div>
+                            <!-- Buttons -->
+                            <button type="button" class="btn btn-light me-2" data-mdb-ripple-init
+                                data-mdb-ripple-color="dark">Remove</button>
+                            <button type="button" class="btn btn-dark" data-mdb-ripple-init>Change</button>
+                        </div>
+                    </div>
+
+                    <!-- Second Column -->
+                    <div class="col-md-6 col-12">
+                        <div class="row g-4">
+                            <!-- Full Name Section -->
+                            <div class="col-md-6 col-12">
+                                <div class="me-3">
+                                    <p class="mb-0 text-end">Name</p>
+                                    <label for="fullName" class="visually-hidden">Full name</label>
+                                    <input type="text" readonly class="form-control-plaintext" id="fullName"
+                                        value="{{ request.user.get_full_name }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Buttons -->
+                                <div class="d-flex align-items-center">
+                                    <button type="button" class="btn btn-dark" data-mdb-ripple-init>Edit</button>
+                                </div>
+                            </div>
+
+                            <!-- Email Address Section -->
+                            <div class="col-md-6 col-12">
+                                <div class="me-3">
+                                    <p class="mb-0 text-end">Email Address</p>
+                                    <label for="emailAddress" class="visually-hidden">Email Address</label>
+                                    <input type="text" readonly class="form-control-plaintext" id="emailAddress"
+                                        value="{{ request.user.email }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Buttons -->
+                                <div class="d-flex align-items-center">
+                                    <button type="button" class="btn btn-dark" data-mdb-ripple-init>Edit</button>
+                                </div>
+                            </div>
+
+                            <!-- Password Name Section -->
+                            <div class="col-md-6 col-12">
+                                <div class="me-3">
+                                    <p class="mb-0 text-end">Password <span
+                                            class="text-body-secondary ">(tokenised)</span>
+                                    </p>
+                                    <label for="passwordField" class="visually-hidden">Password</label>
+                                    <input type="text" readonly class="form-control-plaintext" id="passwordField"
+                                        value="{{ request.user.password }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Buttons -->
+                                <div class="d-flex align-items-center">
+                                    <a type="button" class="btn btn-dark" data-mdb-ripple-init>Change</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
-                            <!-- Buttons -->
-                            <div class="d-flex align-items-center">
-                                <button type="button" class="btn btn-light me-2" data-mdb-ripple-init
-                                    data-mdb-ripple-color="dark">Remove</button>
-                                <button type="button" class="btn btn-dark" data-mdb-ripple-init>Change</button>
-                            </div>
-                        </div>
                     </div>
-                </div>
 
-                <!-- Second Column -->
-                <div class="col-md-6 col-12">
-                    <div class="row g-4">
-                        <!-- Full Name Section -->
-                        <div class="col-md-6 col-12">
-                            <div class="me-3">
-                                <p class="mb-0 text-end">Name</p>
-                                <label for="fullName" class="visually-hidden">Full name</label>
-                                <input type="text" readonly class="form-control-plaintext" id="fullName"
-                                    value="{{ request.user.get_full_name }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <!-- Buttons -->
-                            <div class="d-flex align-items-center">
-                                <button type="button" class="btn btn-dark" data-mdb-ripple-init>Edit</button>
-                            </div>
-                        </div>
+                    <hr class="m-0" />
 
-                        <!-- Email Address Section -->
-                        <div class="col-md-6 col-12">
-                            <div class="me-3">
-                                <p class="mb-0 text-end">Email Address</p>
-                                <label for="emailAddress" class="visually-hidden">Email Address</label>
-                                <input type="text" readonly class="form-control-plaintext" id="emailAddress"
-                                    value="{{ request.user.email }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <!-- Buttons -->
-                            <div class="d-flex align-items-center">
-                                <button type="button" class="btn btn-dark" data-mdb-ripple-init>Edit</button>
-                            </div>
-                        </div>
-
-                        <!-- Password Name Section -->
-                        <div class="col-md-6 col-12">
-                            <div class="me-3">
-                                <p class="mb-0 text-end">Password(<span class="text-danger">Tokenised)</span></p>
-                                <label for="passwordField" class="visually-hidden">Password</label>
-                                <input type="text" readonly class="form-control-plaintext" id="passwordField"
-                                    value="{{ request.user.password }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <!-- Buttons -->
-                            <div class="d-flex align-items-center">
-                                <a type="button" class="btn btn-dark" data-mdb-ripple-init>Change</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="m-0" />
-
-                <!-- Single Big Column -->
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-md-6 gx-5 mb-4 d-lg-flex align-items-center">
-                            <div>
-                                <h4><strong>Subscribe to stay up to date</strong></h4>
-                                <p class="text-muted">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis consequatur
-                                    eligendi quisquam doloremque vero ex debitis veritatis placeat unde animi
-                                    laborum
-                                    sapiente illo possimus, commodi dignissimos obcaecati illum maiores
-                                    corporis.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 gx-5 mb-4">
-                            <!-- Email input -->
-                            <form>
-                                <div class="mb-3 text-end">
-                                    <label for="emailAddress" class="form-label">Email
-                                        address</label>
-                                    <input type="email" class="form-control" id="emailAddress"
-                                        placeholder="name@example.com" value="{{ request.user.email  }}">
+                    <!-- Single Big Column -->
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-6 gx-5 mb-4 d-lg-flex align-items-center">
+                                <div>
+                                    <h4><strong>Subscribe to stay up to date</strong></h4>
+                                    <p class="text-muted">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis consequatur
+                                        eligendi quisquam doloremque vero ex debitis veritatis placeat unde animi
+                                        laborum
+                                        sapiente illo possimus, commodi dignissimos obcaecati illum maiores
+                                        corporis.
+                                    </p>
                                 </div>
+                            </div>
 
-                                <div class="mb-3 text-end">
-                                    <!-- Checkbox -->
-                                    <div class="form-check d-flex justify-content-center mb-4">
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="form5Example3"
-                                            checked />
-                                        <label class="form-check-label" for="form5Example3">
-                                            I have read and agree to the terms
-                                        </label>
+                            <div class="col-md-6 gx-5 mb-4">
+                                <!-- Email input -->
+                                <form>
+                                    <div class="mb-3 text-end">
+                                        <label for="emailAddress" class="form-label">Email
+                                            address</label>
+                                        <input type="email" class="form-control" id="emailAddress"
+                                            placeholder="name@example.com" value="{{ request.user.email  }}">
                                     </div>
-                                </div>
-                                <!-- Submit button -->
-                                <input data-mdb-ripple-init type="submit" class="btn btn-subtle-primary btn-block mb-4"
-                                    value="Subscribe">
-                            </form>
+
+                                    <div class="mb-3 text-end">
+                                        <!-- Checkbox -->
+                                        <div class="form-check d-flex justify-content-center mb-4">
+                                            <input class="form-check-input me-2" type="checkbox" value=""
+                                                id="form5Example3" checked />
+                                            <label class="form-check-label" for="form5Example3">
+                                                I have read and agree to the terms
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- Submit button -->
+                                    <input data-mdb-ripple-init type="submit" class="btn btn-secondary btn-block mb-4"
+                                        value="Subscribe">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
-        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab"
-            tabindex="0">
-            No new messages!
-        </div>
-        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab"
-            tabindex="0">
+            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab"
+                tabindex="0">
+                No new messages!
+            </div>
+            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab"
+                tabindex="0">
 
+            </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
 
 <div class="d-flex align-items-start" hidden>

@@ -44,18 +44,31 @@ def create_new_user(request):
         return render(request, 'authentication/create_user.html', {'current_user': current_user})
 
     if request.method == 'POST':
+        flag = False
+        
         # Fetch User Details from Web Page
         first_name = request.POST.get('firstname')
-        last_name = request.POST.get('last_name')
-        
-        email_address = request.POST.get('email_address')        
-
+        last_name = request.POST.get('lastname')
         username = request.POST.get('username')
+        
+        email_address = request.POST.get('emailaddress') 
         password = request.POST.get('password')
+        confirm_password = request.POST.get('confirmpassword')
+
+        if password == confirm_password:
+            pass
+        else:
+            flag = True
 
         try:
             # Create a New User instance and Set Attributes
-            new_user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email_address, password=password)
+            new_user = User.objects.create_user(
+                first_name=first_name, 
+                last_name=last_name, 
+                username=username, 
+                email=email_address, 
+                password=password
+            )
 
             # Set Firstname
             new_user.first_name = first_name
@@ -70,7 +83,8 @@ def create_new_user(request):
             UserProfile.objects.create(user=new_user)
             
             print("Successfully Added New User to Database")
-            print(f"USERNAME - {username}\nPassword(raw) - {password}\nFirstname - {first_name}")
+            
+
             # Redirect User to Profile
             return HttpResponseRedirect(reverse('user_auth:show_user'))  
 
