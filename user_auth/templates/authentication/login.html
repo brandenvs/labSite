@@ -1,11 +1,6 @@
-<!--Fetch_Layout File-->
 {% extends '../shared/auth_base.html' %}
 
-<!--Set_Layout Application Name-->
-{% block app_name %}User Authentication{% endblock %}
-
-<!--Set_Layout Page Title-->
-{% block title %}Login - Auth{% endblock %}
+{% block title %}Login 🔑{% endblock %}
 
 <!--Body Content-->
 {% block content %}
@@ -16,14 +11,14 @@
 <a class="btn btn-outline-primary mb-3" href="{% url 'user_auth:show_user' %}">View Profile?</a>
 
 {% else %}
-<div class="container d-flex justify-content-center m-4">
+<div class="d-flex justify-content-center m-4">
     <form action="{% url 'user_auth:authenticate_user' %}">
         {% csrf_token %}
         <h2>Login</h2>
         <div class="field">
             <label class="label text-dark text-end">Username</label>
             <div class="control has-icons-left has-icons-right">
-                <input class="input" type="text" placeholder="Astro username">
+                <input class="input" type="text" placeholder="Astro username" required>
                 <span class="icon is-small is-left">
                     <i class="fas fa-user-astronaut"></i>
                 </span>
@@ -32,7 +27,7 @@
         <div class="field">
             <label class="label text-dark text-end">Password</label>
             <div class="control has-icons-left has-icons-right">
-                <input class="input" type="password" placeholder="Password">
+                <input class="input" type="password" placeholder="Password" required>
                 <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
                 </span>

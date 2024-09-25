@@ -6,3 +6,5 @@
 | Contributor           | Cell No.        | Email Address              |
 | --------------------- | --------------- | -------------------------- |
 | By Branden van Staden | +27 81 565 0206 | brandenconnected@gmail.com |
+
+Visit Deployment of Current Version: [br-code.bcodelabs.com](https://br-code.bcodelabs.com)

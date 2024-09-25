@@ -43,62 +43,107 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.rtl.min.css"
     integrity="sha512-nCfdR2EW/gyEZezb8XCXH9vybKfhwE9Mu3OAhLXXEcVOs6bB0vVHsuxe/X/S4BXgk1LhatmiyGwqfdDN+BqMiA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{% static 'auth.css' %}" />
 
   <style>
-    html,
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-
-    .child {
-      flex-grow: 1;
-      /* Child elements will stretch equally */
-      width: 100%;
-      /* Full width of the container */
-      background-color: lightblue;
-    }
-
-    .footer {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.40);
-      color: white;
-    }
-
-    @media only screen and (max-width: 768px) {
-      .hide-on-mobile {
-        display: none;
-      }
-    }
-
-    /* Styling for the form */
-    form {
-      background-color: #f4f4f4;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      font-family: "Montserrat", sans-serif;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       text-align: center;
+      min-height: 100vh;
+      margin: 0;
+
+      transition: background 0.2s linear;
     }
 
-    /* Optional form element styling */
-    input {
-      display: block;
-      max-width: 30%;
-      width: 30%;
-      font-size: 16px;
+    body.dark {
+      background-color: #292c35;
     }
 
-    /* button {
-      padding: 10px 15px;
-      background-color: #007bff;
-      color: white;
-      border: none;
+    /* #9b59b6 */
+
+    body.dark h1,
+    body.dark .support a {
+      color: #fff;
+    }
+
+    .checkbox {
+      opacity: 0;
+      position: absolute;
+    }
+
+    .checkbox-label {
+      background-color: #111;
+      width: 50px;
+      height: 26px;
+      border-radius: 50px;
+      position: relative;
+      padding: 5px;
       cursor: pointer;
-    } */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .fa-moon {
+      color: #f1c40f;
+    }
+
+    .fa-sun {
+      color: #f39c12;
+    }
+
+    .checkbox-label .ball {
+      background-color: #fff;
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      border-radius: 50%;
+      transition: transform 0.2s linear;
+    }
+
+    .checkbox:checked+.checkbox-label .ball {
+      transform: translateX(24px);
+    }
+
+
+
+
+
+
+
+
+
+    /*  Support me if you like it */
+    .support {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+    }
+
+    .support a {
+      color: #292c35;
+      font-size: 32px;
+      backface-visibility: hidden;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    .support a:hover {
+      transform: scale(1.1);
+    }
   </style>
 </head>
 
@@ -108,16 +153,10 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary container-fluid">
       <!-- Container wrapper -->
       <div class="container">
-        {% if user.is_authenticated %}
         <!-- Navbar brand -->
-        <a class="navbar-brand me-2 p-0 m-0" href="/" title="BR Code - Portal">
-          {% if request.user.userprofile.selected_theme == 'dark' %}
-          <img src="{% static 'br-code-dark.gif' %}" height="80" alt="MDB Logo" loading="lazy" class="rounded-5"
+        <a class="navbar-brand me-2 p-0 m-0" href="/" title="BR Code">
+          <img src="{% static 'br-code-dark.gif' %}" height="80" width="80" loading="lazy" class="rounded-5"
             style="margin-top: -1px;" />
-          {% else %}
-          <img src="{% static 'br-code-light.gif' %}" height="80" alt="MDB Logo" loading="lazy"
-            style="margin-top: -1px;" />
-          {% endif %}
         </a>
 
         <!-- Collapsible wrapper -->
@@ -125,66 +164,25 @@
           <!-- Left links -->
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark"
-                href="{% url 'hyperion:hd_home' %}">Hyperion
-                Development</a>
+              <a data-mdb-ripple-init class="btn btn-link px-3 me-2" href="{% url 'user_auth:login'  %}">
+                Login
+              </a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark" href="#">FyreWatch</a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark" href="#">SBG
-                Trader</a>
+              <a data-mdb-ripple-init class="btn btn-primary me-3" href="{% url 'user_auth:create_user'  %}">
+                Sign up
+              </a>
             </li>
           </ul>
-        </div>
 
-        <!-- Left links -->
-
-        <!-- Notifications -->
-        <div class="dropdown" hidden>
-          <a data-mdb-dropdown-init data-mdb-ripple-init
-            class="btn btn-floating text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
-            role="button" aria-expanded="false" title="Notifications">
-
-            <i class="fas fa-bell fa-2x"></i>
-
-            <span class="badge rounded-pill badge-notification bg-danger"></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-            <li>
-              <a class="dropdown-item text-primary" href="#">Some news</a>
-            </li>
-            <li>
-              <a class="dropdown-item text-primary" href="#">Another news</a>
-            </li>
-            <li>
-              <a class="dropdown-item text-primary" href="#">Something else here</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Avatar -->
-        <div class="dropdown">
-          <a data-mdb-dropdown-init data-mdb-ripple-color="dark"
-            class="btn btn-link text-reset me-3 dropdown-toggle hidden-arrow fs-5" href="#"
-            id="navbarDropdownMenuAvatar" role="button" aria-expanded="false" title="Astro Profile">
-            <i class="fas fa-user-astronaut"> <small>{{ user.username }}</small></i>
-            <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
-                alt="Black and White Portrait of a Man" loading="lazy" /> -->
-          </a>
-
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-            <li>
-              <a class="dropdown-item" href="{% url 'user_auth:show_user' %}">My profile</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="{% url 'user_auth:toggle_theme' %}">Toggle Theme</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="{% url 'user_auth:logout_user' %}">Logout</a>
-            </li>
-          </ul>
+          <div class="d-flex align-items-center">
+            <input type="checkbox" class="checkbox" id="checkbox">
+            <label for="checkbox" class="checkbox-label">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+              <span class="ball"></span>
+            </label>
+          </div>
         </div>
 
         <!-- Toggle button -->
@@ -193,27 +191,17 @@
           <i class="fas fa-bars"></i>
         </button>
 
-        {% else %}
-        <div class="d-flex align-items-center">
-          <a data-mdb-ripple-init class="btn btn-link px-3 me-2" href="{% url 'user_auth:login'  %}">
-            Login
-          </a>
-          <a data-mdb-ripple-init class="btn btn-primary me-3" href="{% url 'user_auth:create_user'  %}">
-            Sign up
-          </a>
-        </div>
-        {% endif %}
       </div>
     </nav>
+
     <main role="main" class="container">
       {% block content %}{% endblock %}
     </main>
   </header>
 
   <footer class="bg-secondary hide-on-mobile position-absolute bottom-0 start-0 container-fluid">
-    {% if user.is_authenticated %}
-
-    <div class="d-flex align-items-center container">
+    <div class="d-flex align-items-center">
+      {% if user.is_authenticated %}
       <div class="p-2 flex-grow-1">
         <!-- Github -->
         <a class="btn text-white" data-mdb-ripple-init style="background-color: #333333;"
@@ -245,31 +233,31 @@
           <i class="fab fa-dribbble fa-1x"></i>
         </a>
 
+        <!-- Right side -->
+        <!-- SearXNG -->
+        <div class="p-2">
+          <a href="https://search.bcodelabs.com/" class="btn btn-secondary"
+            title="Start a privately hosted internet search session." data-mdb-ripple-init target="_blank">
+            <i class="fab fa-searchengin fa-1x"></i>
+          </a>
+        </div>
       </div>
-
-      <!-- Right side -->
-
-      <!-- SearXNG -->
-      <div class="p-2">
-        <a href="https://search.bcodelabs.com/" class="btn btn-secondary"
-          title="Start a privately hosted internet search session." data-mdb-ripple-init target="_blank">
-          <i class="fab fa-searchengin fa-1x"></i>
-        </a>
-      </div>
-    </div>
-    {% else %}
-    <div class="d-flex align-items-center container">
-      <div class="p-2 flex-grow-1">
+      {% else %}
+      <div class="p-2 flex-grow-1 text-end">
         <!-- Info -->
         <a class="btn text-white" data-mdb-ripple-init style="background-color: #0082ca;" href="#!" role="button"
           target="_blank" title="Learn more about this site.">
           <i class="fas fa-info fa-2x"></i>
         </a>
       </div>
-    </div>
-    {% endif %}
+      <div class="p-2" id="statusSecure" style="display: none;" title="🔒 Connection is now end-to-end encrypted">
+        <i class="text-success fas fa-lock fa-2x"></i>
+      </div>
+      <div class="p-2" id="statusInsecure">
+        <i class="text-warning fas fa-lock-open fa-2x"></i>
+      </div>
+      {% endif %}
   </footer>
-
 
   <!-- Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -280,6 +268,29 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.es.min.js"></script>
 
+  <!-- Site js  -->
+  <script type="text/javascript" src="{% static 'site.js' %}"></script>
+
+  <script>
+    const statusSecure = document.getElementById('statusSecure');
+    const statusInsecure = document.getElementById('statusInsecure');
+
+    if (statusInsecure.style.display === 'none' || statusInsecure.style.display === '') {
+      statusInsecure.style.display = 'block';
+      this.textContent = 'Hide Element';
+
+      setTimeout(() => {
+        statusSecure.style.display = 'block';
+        statusInsecure.style.display = 'none';
+        console.log('From: BR Code SOC');
+        console.log('🔒 Connection is now end-to-end encrypted.');
+
+      }, 3000);
+    } else {
+      statusSecure.style.display = 'none';
+      this.textContent = 'Show Element';
+    }
+  </script>
   {% block javascript %}{% endblock %}
 </body>
 
