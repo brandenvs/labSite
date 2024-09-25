@@ -7,7 +7,7 @@
 
 **Refer: [Current Version 1.0](https://bcodelabs.com/)**
 
-> ### Production issues
+> ### Production issues (ALL DONE)
 >
 > - [x] LinkedIn *button* `href` **value is incorrect**.
 > - [x] WhatsApp *button* `href` **value is incorrect**.
@@ -18,8 +18,9 @@
 
 > ### User Auth
 >
-> - [ ] Map Login and Sign-up buttons
-> - [ ] Overhaul forms to suit other site features(**MDB**)
+> - [x] Map Login and Sign-up buttons.
+> - [x] Overhaul login frontend.
+> - [ ] Overhaul registration frontend.
 >
 
 > ### User Profile webpage
@@ -31,6 +32,7 @@
 > - [ ] Build **Settings** webpage.
 > - [ ] Build **Message Board** webpage.
 > - [ ] Enhance tabs by animating for profile buttons(My Profile, Message, settings).
+> - [ ] Mobile responsive.
 >
 
 > ### Non-critical Objectives (Current Version)
@@ -38,5 +40,5 @@
 > - [ ] Navbar: Assign layout their active tab.
 > - [ ] Footer needs to be streamlined and **not sticky**.
 > - [ ] Changing theme: Initial click for user sets the value to default(**light**).*Appropriate theme changes only occur after FIRST click.*
-> - [ ] NavBar: Astro Profile (**Brainstorm**)
+> - [ ] NavBar: Astro Profile (**Brainstorm**).
 >
