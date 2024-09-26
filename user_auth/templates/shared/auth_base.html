@@ -8,6 +8,8 @@
 
   <title>{% block title %}{{ request.user.first_name }}'s Profile{% endblock %}</title>
 
+  <p style="display: none;">{% block page_title %}Default{% endblock %}</p>
+
   {% load static %}
 
   <!-- Icon Files -->
@@ -77,6 +79,25 @@
       color: #fff;
     }
 
+    body.dark h2 {
+      color: #ffffff;
+    }
+
+    body.dark #myForm,
+    body.dark #navContainer {
+      background-color: #2b2d34;
+    }
+
+    body.dark input {
+      background-color: rgba(114, 114, 114, 0.5);
+      color: white;
+    }
+
+    body.dark footer {
+      background-color: rgba(114, 114, 114, 0.5);
+      color: white;
+    }
+
     .checkbox {
       opacity: 0;
       position: absolute;
@@ -118,14 +139,6 @@
       transform: translateX(24px);
     }
 
-
-
-
-
-
-
-
-
     /*  Support me if you like it */
     .support {
       position: absolute;
@@ -150,11 +163,11 @@
 <body>
   <header>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary p-0">
       <!-- Container wrapper -->
-      <div class="container">
+      <div class="container" id="navContainer">
         <!-- Navbar brand -->
-        <a class="navbar-brand me-2 p-0 m-0" href="/" title="BR Code">
+        <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code">
           <img src="{% static 'br-code-dark.gif' %}" height="80" width="80" loading="lazy" class="rounded-5"
             style="margin-top: -1px;" />
         </a>
@@ -164,16 +177,22 @@
           <!-- Left links -->
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a data-mdb-ripple-init class="btn btn-link px-3 me-2" href="{% url 'user_auth:login'  %}">
+              <a data-mdb-ripple-init
+                class="btn btn-link {% if page_title == 'login' %}btn-primary text-white{% endif %} px-3 me-2"
+                href="{% url 'user_auth:login' %}">
                 Login
               </a>
             </li>
+
             <li class="nav-item">
-              <a data-mdb-ripple-init class="btn btn-primary me-3" href="{% url 'user_auth:create_user'  %}">
+              <a data-mdb-ripple-init
+                class="btn btn-link {% if block.super == 'login' %}btn-primary text-white{% endif %} px-3 me-2"
+                href="{% url 'user_auth:create_user' %}">
                 Sign up
               </a>
             </li>
           </ul>
+
 
           <div class="d-flex align-items-center">
             <input type="checkbox" class="checkbox" id="checkbox">
@@ -190,7 +209,6 @@
           aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars"></i>
         </button>
-
       </div>
     </nav>
 
@@ -199,7 +217,7 @@
     </main>
   </header>
 
-  <footer class="bg-secondary hide-on-mobile position-absolute bottom-0 start-0 container-fluid">
+  <footer class="hide-on-mobile position-absolute bottom-0 start-0 container-fluid">
     <div class="d-flex align-items-center">
       {% if user.is_authenticated %}
       <div class="p-2 flex-grow-1">

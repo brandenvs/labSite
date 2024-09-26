@@ -9,7 +9,7 @@ urlpatterns = [
     
     # Applications
     path('hd-v00/', include('hyperion.urls')),
-    path('fr-v00/', include('hyperion.urls')),    
+    path('fr-v00/', include('hyperion.urls')),
     path('sbg-trade-v00/', include('hyperion.urls')),
     
 ]

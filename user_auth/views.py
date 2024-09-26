@@ -30,22 +30,18 @@ def toggle_theme(request):
     return HttpResponseRedirect(reverse('portal:index'))
 
 def user_login(request):    
-    if request.user.is_authenticated:        
-        current_user = request.user
-        return HttpResponseRedirect(reverse('portal:index'))
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('portal:index'), {'message': 'You are already logged in!'})
     else:
-        current_user = None
-        return render(request, 'authentication/login.html', {'current_user': current_user})
+        return render(request, 'authentication/login.html')
 
 def create_new_user(request):
     if request.user.is_authenticated:
         current_user = request.user
         print("User is trying to create a NEW USER while still logged in...")
-        return render(request, 'authentication/create_user.html', {'current_user': current_user})
+        return render(request, 'authentication/sign_up.html', {'current_user': current_user})
 
-    if request.method == 'POST':
-        flag = False
-        
+    if request.method == 'POST':        
         # Fetch User Details from Web Page
         first_name = request.POST.get('firstname')
         last_name = request.POST.get('lastname')
@@ -54,11 +50,14 @@ def create_new_user(request):
         email_address = request.POST.get('emailaddress') 
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirmpassword')
-
-        if password == confirm_password:
-            pass
-        else:
-            flag = True
+        print(password, confirm_password)
+        if User.objects.filter(username=username).exists():
+            return render(request, 'authentication/sign_up.html', {'message': 'Username already exists!'})
+        elif password != confirm_password:
+            return render(request, 'authentication/sign_up.html', {'message': 'Passwords do not match!'})
+        elif User.objects.filter(email=email_address).exists():
+            return render(request, 'authentication/sign_up.html', {'message': "Email address already associated to an account!"})
+            
 
         try:
             # Create a New User instance and Set Attributes
@@ -86,17 +85,17 @@ def create_new_user(request):
             
 
             # Redirect User to Profile
-            return HttpResponseRedirect(reverse('user_auth:show_user'))  
+            return render(request, 'authentication/login.html', {'success_message': 'User successfully created! Please login using the same credentials.'})
 
         # Catch the exception
         except Exception as ex:            
             # Get the Error Message
             error_message = str(ex)
             # Render Create User View and, Pass the Error Message to View
-            return render(request, 'authentication/create_user.html', {'error_message': error_message})
+            return render(request, 'authentication/sign_up.html', {'message': error_message})
 
     # Render Initial Create User View
-    return render(request, 'authentication/create_user.html')
+    return render(request, 'authentication/sign_up.html')
 
 # Create User Function(Redirects...)
 def user_create(request):
@@ -125,20 +124,25 @@ def user_create(request):
 # Create User View
 def create_user(request):
     # Render View
-    return render(request, 'authentication/create_user.html')
+    return render(request, 'authentication/sign_up.html')
 
 # Login User(Authentication) Function - Handles Login Logic.
 def authenticate_user(request):
-    username = request.POST['username']
-    password = request.POST['password']    
-    # Authorize user
-    user = authenticate(username=username, password=password)
-    # User is NOT Authenticated
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    
+    try:
+        # Authorize user
+        user = authenticate(username=username, password=password)
+
+    except Exception as ex:
+        print(ex)
+        return HttpResponseRedirect(reverse('user_auth:login'), {'message': ex})
+
+    # Handle invalid inputs
     if user is None:
-        # Update result parameter to pass to view
         error_message = "Invalid Username or Password!"
-        # Construct reverse URL for Http Response Redirect
-        return render(request, 'authentication/login.html', {'error_message': error_message})
+        return render(request, 'authentication/login.html', {'message': error_message})
     else:
         # Login user 
         login(request, user)

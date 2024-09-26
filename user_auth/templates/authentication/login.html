@@ -2,19 +2,41 @@
 
 {% block title %}Login 🔑{% endblock %}
 
+{% block page_title %}login{% endblock %}
+
 <!--Body Content-->
 {% block content %}
-
-{% if user.is_authenticated %}
-<p class="text-success fw-4">You are already logged in!</p>
-<a class="btn btn-outline-primary mb-3" href="{% url 'user_auth:logout_user' %}">Logout?</a>
-<a class="btn btn-outline-primary mb-3" href="{% url 'user_auth:show_user' %}">View Profile?</a>
-
-{% else %}
 <div class="d-flex justify-content-center m-4">
-    <form action="{% url 'user_auth:authenticate_user' %}">
+    <form action="{% url 'user_auth:authenticate_user' %}" id="myForm" method="post">
         {% csrf_token %}
         <h2>Login</h2>
+
+        <div class="field">
+            {% if message %}
+            <div class="toast align-items-center m-2 bg-danger text-white" role="alert" aria-live="assertive"
+                aria-atomic="true" id="errorToast">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ message }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            {% elif success_message %}
+            <div class="toast align-items-center m-2 bg-success text-white" role="alert" aria-live="assertive"
+                aria-atomic="true" id="errorToast">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ success_message }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
         <div class="field">
             <label class="label text-dark text-end">Username</label>
             <div class="control has-icons-left has-icons-right">
@@ -37,6 +59,4 @@
         <input type="submit" class="btn btn-outline-info mb-3" value="Login" />
     </form>
 </div>
-
-{% endif %}
 {% endblock %}
