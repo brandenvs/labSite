@@ -8,7 +8,11 @@
 
 > ### Portal webpage
 >
-> - [ ] 
+> Inspire:
+> ![alt text](image.png)
+> - [ ] Build webpage
+> 
+> 
 
 > ### Developer's Corner
 >
@@ -27,7 +31,7 @@
 > - [ ] Mobile responsive.
 >
 
-> ### Code Time webpage
+> ### (Portal) WakaTime webpage
 >
 > - [ ] Build frontend webpage
 > - [ ] Integrate API.
