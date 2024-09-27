@@ -42,6 +42,16 @@ body.dark #navContainer {
     background-color: #2b2d34;
 }
 
+body.dark #appHeading {
+    background-color: #2b2d34;
+    color: #fff;
+}
+
+body.dark #app {
+    background-color: #505462;
+    color: #d5d5d5;
+}
+
 body.dark input {
     background-color: rgba(114, 114, 114, 0.5);
     color: white;

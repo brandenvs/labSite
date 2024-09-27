@@ -15,8 +15,6 @@ DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,7 +54,7 @@ SESSION_COOKIE_SECURE = True
 CORS_ALLOW_ALL_ORIGINS = True
 
 # CSRF Tokenization
-CSRF_TRUSTED_ORIGINS = ['https://bcodelabs.com']
+CSRF_TRUSTED_ORIGINS = ['https://br-code.bcodelabs.com']
 CSRF_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'labSite.urls'
@@ -79,20 +77,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'labSite.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -109,10 +99,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -120,10 +106,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -139,9 +121,6 @@ STATICFILES_DIRS = [
     os.path.join(STATIC_ROOT, 'images'),
 ]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Google auth
@@ -151,5 +130,3 @@ SCOPE = ['https://www.googleapis.com/auth/cloud-platform']
 
 # Path to the credentials file
 CREDS_FILE = os.path.join(BASE_DIR, 'credentials', 'hd-testing.json')
-
-
