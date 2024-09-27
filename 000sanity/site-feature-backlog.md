@@ -8,9 +8,9 @@
 
 > ### Portal webpage
 >
-> Inspire:
-> ![alt text](image.png)
-> - [ ] Build webpage
+> #### WakaTime App
+> 
+> - [x] Build portal card.
 > 
 > 
 

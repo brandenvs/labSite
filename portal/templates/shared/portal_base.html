@@ -43,11 +43,6 @@
 
   <!-- Static Site Stylesheet -->
   <link rel="stylesheet" href="{% static 'site.css'  %}" />
-
-
-  <style>
-
-  </style>
 </head>
 
 <body>
@@ -59,9 +54,9 @@
         {% if user.is_authenticated %}
         <!-- Navbar brand -->
         <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code - Portal">
-          <img src="{% static 'br-code-dark.gif' %}" height="80" alt="MDB Logo" loading="lazy" class="rounded-5" {% if
-            request.user.userprofile.selected_theme=='dark' %} style="margin-top: -1px;" />
-          <!-- <img src="{% static 'br-code-light.gif' %}" height="80" alt="MDB Logo" loading="lazy"
+          <img src="{% static 'br-code-dark.gif' %}" height="80" alt="BR Code Logo" loading="lazy" class="rounded-5"
+            style="margin-top: -1px;" />
+          <!-- <img src="{% static 'br-code-light.gif' %}" height="80" alt="Application Logo" loading="lazy"
             style="margin-top: -1px;" /> -->
         </a>
 
@@ -70,15 +65,16 @@
           <!-- Left links -->
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark"
+              <a class="btn btn-link fs-6 disabled" data-mdb-ripple-init data-mdb-ripple-color="dark"
                 href="{% url 'hyperion:hd_home' %}">Hyperion
                 Development</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark" href="#">FyreWatch</a>
+              <a class="btn btn-link fs-6 disabled" data-mdb-ripple-init data-mdb-ripple-color="dark"
+                href="#">FyreWatch</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark" href="#">SBG
+              <a class="btn btn-link fs-6 disabled" data-mdb-ripple-init data-mdb-ripple-color="dark" href="#">SBG
                 Trader</a>
             </li>
           </ul>
@@ -121,9 +117,9 @@
         <!-- Avatar -->
         <div class="dropdown">
           <a data-mdb-dropdown-init data-mdb-ripple-color="dark"
-            class="btn btn-link text-reset me-3 dropdown-toggle hidden-arrow fs-5" href="#"
+            class="btn btn-link btn-dark me-3 dropdown-toggle hidden-arrow text-white" href="#"
             id="navbarDropdownMenuAvatar" role="button" aria-expanded="false" title="Astro Profile">
-            <i class="fas fa-user-astronaut"> <small>{{ user.username }}</small></i>
+            <i class="fas fa-user-astronaut"> {{ user.username }}</i>
             <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
                 alt="Black and White Portrait of a Man" loading="lazy" /> -->
           </a>
@@ -160,13 +156,45 @@
       </div>
     </nav>
 
-    <main role="main" class="container">
+    <main role="main" class="container mt-5">
       {% block content %}{% endblock %}
     </main>
   </header>
 
   <footer class="footer hide-on-mobile">
+    <section class="text-center m-4" hidden>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 mb-5 mb-md-5 mb-lg-0 position-relative">
+          <i class="fas fa-cubes fa-3x text-primary mb-4"></i>
+          <h5 class="text-primary fw-bold mb-3">1000+</h5>
+          <h6 class="fw-normal mb-0">Coffees Drank</h6>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-5 mb-md-5 mb-lg-0 position-relative">
+          <i class="fas fa-layer-group fa-3x text-primary mb-4"></i>
+          <h5 class="text-primary fw-bold mb-3">673+</h5>
+          <h6 class="fw-normal mb-0">GitHub Contributions
+          </h6>
+          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-5 mb-md-0 position-relative">
+          <i class="fas fa-image fa-3x text-primary mb-4"></i>
+          <h5 class="text-primary fw-bold mb-3">100+</h5>
+          <h6 class="fw-normal mb-0">Templates</h6>
+          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-5 mb-md-0 position-relative">
+          <i class="fas fa-plug fa-3x text-primary mb-4"></i>
+          <h5 class="text-primary fw-bold mb-3">28</h5>
+          <h6 class="fw-normal mb-0">Plugins</h6>
+          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
+        </div>
+      </div>
+    </section>
     <div class="d-flex align-items-center">
+
       <div class="p-2 flex-grow-1">
         <!-- Github -->
         <a class="btn text-white" data-mdb-ripple-init style="background-color: #333333;"

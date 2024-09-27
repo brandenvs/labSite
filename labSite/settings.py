@@ -136,8 +136,7 @@ STATICFILES_DIRS = [
     os.path.join(STATIC_ROOT, 'favicon'),
     os.path.join(STATIC_ROOT, 'js'),
     os.path.join(STATIC_ROOT, 'css'),
-    
-    
+    os.path.join(STATIC_ROOT, 'images'),
 ]
 
 # Default primary key field type
