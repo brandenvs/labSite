@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en" data-mdb-theme="{{ request.user.userprofile.selected_theme }}">
+<html lang="en" data-mdb-theme="">
 
 <head>
   <meta charset="utf-8" />
@@ -67,96 +67,6 @@
 
       transition: background 0.2s linear;
     }
-
-    body.dark {
-      background-color: #292c35;
-    }
-
-    /* #9b59b6 */
-
-    body.dark h1,
-    body.dark .support a {
-      color: #fff;
-    }
-
-    body.dark h2 {
-      color: #ffffff;
-    }
-
-    body.dark #myForm,
-    body.dark #navContainer {
-      background-color: #2b2d34;
-    }
-
-    body.dark input {
-      background-color: rgba(114, 114, 114, 0.5);
-      color: white;
-    }
-
-    body.dark footer {
-      background-color: rgba(114, 114, 114, 0.5);
-      color: white;
-    }
-
-    .checkbox {
-      opacity: 0;
-      position: absolute;
-    }
-
-    .checkbox-label {
-      background-color: #111;
-      width: 50px;
-      height: 26px;
-      border-radius: 50px;
-      position: relative;
-      padding: 5px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .fa-moon {
-      color: #f1c40f;
-    }
-
-    .fa-sun {
-      color: #f39c12;
-    }
-
-    .checkbox-label .ball {
-      background-color: #fff;
-      width: 22px;
-      height: 22px;
-      position: absolute;
-      left: 2px;
-      top: 2px;
-      border-radius: 50%;
-      transition: transform 0.2s linear;
-    }
-
-    .checkbox:checked+.checkbox-label .ball {
-      transform: translateX(24px);
-    }
-
-    /*  Support me if you like it */
-    .support {
-      position: absolute;
-      right: 20px;
-      bottom: 20px;
-    }
-
-    .support a {
-      color: #292c35;
-      font-size: 32px;
-      backface-visibility: hidden;
-      display: inline-block;
-      transition: transform 0.2s ease;
-    }
-
-    .support a:hover {
-      transform: scale(1.1);
-    }
   </style>
 </head>
 
@@ -177,24 +87,20 @@
           <!-- Left links -->
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a data-mdb-ripple-init
-                class="btn btn-link {% if page_title == 'login' %}btn-primary text-white{% endif %} px-3 me-2"
-                href="{% url 'user_auth:login' %}">
+              <a data-mdb-ripple-init class="btn btn-link  px-3 me-2" href="{% url 'user_auth:login' %}">
                 Login
               </a>
             </li>
 
             <li class="nav-item">
-              <a data-mdb-ripple-init
-                class="btn btn-link {% if block.super == 'login' %}btn-primary text-white{% endif %} px-3 me-2"
+              <a data-mdb-ripple-init class="btn btn-link btn-primary text-white px-3 me-2"
                 href="{% url 'user_auth:create_user' %}">
                 Sign up
               </a>
             </li>
           </ul>
 
-
-          <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center" onclick="toggleTheme()">
             <input type="checkbox" class="checkbox" id="checkbox">
             <label for="checkbox" class="checkbox-label">
               <i class="fas fa-moon"></i>
@@ -202,14 +108,13 @@
               <span class="ball"></span>
             </label>
           </div>
-        </div>
 
-        <!-- Toggle button -->
-        <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarButtonsExample"
-          aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
+          <!-- Toggle button -->
+          <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarButtonsExample"
+            aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
     </nav>
 
     <main role="main" class="container">
@@ -289,6 +194,9 @@
   <!-- Site js  -->
   <script type="text/javascript" src="{% static 'site.js' %}"></script>
 
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <script>
     const statusSecure = document.getElementById('statusSecure');
     const statusInsecure = document.getElementById('statusInsecure');
@@ -309,6 +217,13 @@
       this.textContent = 'Show Element';
     }
   </script>
+
+  <script>
+    window.onload = function () {
+      theme = getTheme();
+    };
+  </script>
+
   {% block javascript %}{% endblock %}
 </body>
 

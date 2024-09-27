@@ -41,40 +41,28 @@
     integrity="sha512-nCfdR2EW/gyEZezb8XCXH9vybKfhwE9Mu3OAhLXXEcVOs6bB0vVHsuxe/X/S4BXgk1LhatmiyGwqfdDN+BqMiA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <style>
-    .footer {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.44);
-      color: white;
-    }
+  <!-- Static Site Stylesheet -->
+  <link rel="stylesheet" href="{% static 'site.css'  %}" />
 
-    @media only screen and (max-width: 768px) {
-      .hide-on-mobile {
-        display: none;
-      }
-    }
+
+  <style>
+
   </style>
 </head>
 
 <body>
   <header>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary p-0">
       <!-- Container wrapper -->
-      <div class="container">
+      <div class="container-fluid" id="navContainer">
         {% if user.is_authenticated %}
         <!-- Navbar brand -->
-        <a class="navbar-brand me-2 p-0 m-0" href="/" title="BR Code - Portal">
-          {% if request.user.userprofile.selected_theme == 'dark' %}
-          <img src="{% static 'br-code-dark.gif' %}" height="80" alt="MDB Logo" loading="lazy" class="rounded-5"
-            style="margin-top: -1px;" />
-          {% else %}
-          <img src="{% static 'br-code-light.gif' %}" height="80" alt="MDB Logo" loading="lazy"
-            style="margin-top: -1px;" />
-          {% endif %}
+        <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code - Portal">
+          <img src="{% static 'br-code-dark.gif' %}" height="80" alt="MDB Logo" loading="lazy" class="rounded-5" {% if
+            request.user.userprofile.selected_theme=='dark' %} style="margin-top: -1px;" />
+          <!-- <img src="{% static 'br-code-light.gif' %}" height="80" alt="MDB Logo" loading="lazy"
+            style="margin-top: -1px;" /> -->
         </a>
 
         <!-- Collapsible wrapper -->
@@ -99,6 +87,15 @@
         <!-- Left links -->
 
         <!-- Notifications -->
+        <div class="d-flex align-items-center" onclick="toggleTheme()">
+          <input type="checkbox" class="checkbox" id="checkbox">
+          <label for="checkbox" class="checkbox-label">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+            <span class="ball"></span>
+          </label>
+        </div>
+
         <div class="dropdown" hidden>
           <a data-mdb-dropdown-init data-mdb-ripple-init
             class="btn btn-floating text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
@@ -223,7 +220,14 @@
   <!-- MDB -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.es.min.js"></script>
+  <script type="text/javascript" src="{% static 'site.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+  <script>
+    window.onload = function () {
+      theme = getTheme();
+    };
+  </script>
   {% block javascript %}{% endblock %}
 </body>
 

@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
 from django.shortcuts import redirect, render
@@ -6,28 +6,40 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+import json
 from .models import UserProfile
 
 app_label = 'user_auth'
 
-@login_required(login_url='user_auth:login')
-def toggle_theme(request):
-    user_profile = UserProfile.objects.get(user=request.user)
+def get_theme(request):
+    try:
+        selected_theme = request.session['selected_theme']
+    except:
+        request.session.setdefault('selected_theme', 'light')
     
-    current_theme = str(user_profile.selected_theme )
-    print(user_profile, current_theme)
-    if current_theme == 'light':
-        user_profile.update_theme('dark')
-    else:
-        user_profile.update_theme('light')
+    selected_theme = request.session['selected_theme']
+    if selected_theme:
+        return HttpResponse(request.session['selected_theme'])
 
-    user_profile.save()
-    current_theme = str(user_profile.selected_theme )
+    else:
+        request.session.setdefault('selected_theme', 'light')
+        return HttpResponse(request.session['selected_theme'])
+
+def toggle_theme(request):
+    selected_theme = str(request.session['selected_theme'])
     
-    print(user_profile, current_theme)
+    if selected_theme:
+        if selected_theme == 'light':
+            request.session['selected_theme']  = 'dark'
+
+        elif selected_theme == 'dark':
+            request.session['selected_theme']  = 'light'
     
-    return HttpResponseRedirect(reverse('portal:index'))
+        return HttpResponse(request.session['selected_theme'])
+
+    else:
+        selected_theme = get_theme(request)
+        return HttpResponse(request.session['selected_theme'])
 
 def user_login(request):    
     if request.user.is_authenticated:
@@ -41,7 +53,7 @@ def create_new_user(request):
         print("User is trying to create a NEW USER while still logged in...")
         return render(request, 'authentication/sign_up.html', {'current_user': current_user})
 
-    if request.method == 'POST':        
+    if request.method == 'POST':
         # Fetch User Details from Web Page
         first_name = request.POST.get('firstname')
         last_name = request.POST.get('lastname')
@@ -51,6 +63,7 @@ def create_new_user(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirmpassword')
         print(password, confirm_password)
+        
         if User.objects.filter(username=username).exists():
             return render(request, 'authentication/sign_up.html', {'message': 'Username already exists!'})
         elif password != confirm_password:
@@ -148,7 +161,7 @@ def authenticate_user(request):
         login(request, user)
         return HttpResponseRedirect(reverse('portal:index'))
 
-# Renders View & Model - User Profile
+# Renders View & Model - User Profile NOTE: Needs to be overhauled
 def show_user(request):
     print(request.user.username)
     if request.user.is_authenticated:
@@ -162,4 +175,5 @@ def show_user(request):
 # Remove the authenticated user's ID from the request and flush their session data
 def logout_user(request):
     logout(request)
+
     return HttpResponseRedirect(reverse('user_auth:login'))
