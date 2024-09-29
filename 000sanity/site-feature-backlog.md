@@ -1,24 +1,19 @@
-# Site Feature backlog
+# Site Feature - Backlog
 
-> ### User Auth (Done)
->
-> - [x] Overhaul login frontend.
-> - [x] **Overhaul registration frontend.**
-> - [x] Overhauled Error handling for incorrect username and password on inputs.
+## Portal #02
 
-> ### Portal webpage
+> ### Application Manager
 >
-> #### WakaTime App
-> 
-> - [x] Build portal card.
-> 
+> - [ ] Frontend: Build Application card.
+> - [ ] Application card model and integrated.
+> - [ ] CRUD functionality for Application Manager.
+> - [ ] Build project model.
+> - [ ] Build application(*project*) model.
+> - [ ] Front and Backend: CRUD a new project.
+> - [ ] Front and Backend: CRUD a new app.> 
 > 
 
-> ### Developer's Corner
->
-> - [ ] Code Snippets(GitHub gists).
-> - [ ] Frontend templates(login forms).
-> - [ ] 
+## User Auth #02
 
 > ### User Profile webpage
 > 
@@ -31,15 +26,12 @@
 > - [ ] Mobile responsive.
 >
 
-> ### (Portal) WakaTime webpage
->
-> - [ ] Build frontend webpage
-> - [ ] Integrate API.
-> 
+## WakaTime Integration #02
 
-> ### Non-critical Objectives (Current Version)
->
-> - [x] Dark / Light mode switch.
-> - [ ] NavBar: Astro Profile (**Brainstorm**).
-> - [ ] Spinner for loading.
-> - [ ] Add breadcrumbs.
+> ### (portal) Application
+> 
+> - [ ] 
+
+## TODO
+
+- [ ] 
