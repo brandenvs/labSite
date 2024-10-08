@@ -10,7 +10,7 @@
 > - [ ] Build project model.
 > - [ ] Build application(*project*) model.
 > - [ ] Front and Backend: CRUD a new project.
-> - [ ] Front and Backend: CRUD a new app.> 
+> - [ ] Front and Backend: CRUD a new app.
 > 
 
 ## User Auth #02

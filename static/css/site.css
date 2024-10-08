@@ -81,6 +81,20 @@ body.dark #app {
     color: #d5d5d5;
 }
 
+body.dark #v-pills-tabContent {
+    background-color: #505462;
+    color: white;
+}
+
+body.dark .card-body {
+    background-color: #505462;
+    color: white;
+}
+
+body.dark p {
+    color: white;
+}
+
 body.dark input {
     background-color: rgba(114, 114, 114, 0.5);
     color: white;
