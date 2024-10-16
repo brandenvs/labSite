@@ -7,5 +7,8 @@ app_label = 'portal'
 def index(request):
     return render(request, 'portal.html')
 
+def create_app(request):
+    return render(request, 'create_app.html')
+
 def waka_time(request):
     pass

@@ -19,10 +19,14 @@ from labSite.settings import CREDS_FILE
 
 
 class Student:
-    def __init__(self, student_name, bootcamp, current_level=0):
+    def __init__(self, student_name, bootcamp, current_level=0, is_dfe=False):
         self.fullname = student_name
         self.bootcamp = bootcamp
         self.current_level = current_level
+        self.is_dfe = is_dfe
+
+    def is_dfe(self):
+        self.is_dfe = True
 
 class StuRecord:
     def __init__(self, task_title='No Title', task_status='No Status', task_score='N/A', task_level='No Set'):
@@ -64,10 +68,15 @@ def accept_cookies(driver: webdriver.Edge) -> webdriver.Edge:
 
 # Get student information
 def get_student(driver: webdriver.Edge) -> Student:
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.TAG_NAME, 'body'))  # Waits for the body tag to be loaded
+    )
+    print("Page is fully loaded.")
+    
     # Locate student details
     student_name = driver.find_element(By.CLASS_NAME, 'profile__excerpt-fullname').text
     bootcamp = driver.find_element(By.CLASS_NAME, 'profile__excerpt-bootcamp-level').text
-    print(student_name, bootcamp)
+    print('Loaded Student: ', student_name)
 
     student = Student(student_name, bootcamp)
 
@@ -144,20 +153,25 @@ def get_worksheet():
 
     # Select a worksheet by index or title
     worksheet = sheet.get_worksheet(0)  # First sheet in the spreadsheet
+    
+    # Get all the data starting from row 2
+    cell_range = worksheet.range('A2:Z')
+
+    # Clear the content of the range
+    for cell in cell_range:
+        cell.value = ''  # Set the value of each cell to an empty string
+
+    # Update the sheet with the cleared range
+    worksheet.update_cells(cell_range)
 
     return worksheet
 
 # Update Google sheet
 def update_values(spreadsheet_id, range_name, value_input_option, _values):
-    """
-    Creates the batch_update the user has access to.
-    Load pre-authorized user credentials from the environment.
-    TODO(developer) - See https://developers.google.com/identity
-    for guides on implementing OAuth2 for the application.
-    """
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
     
     creds = service_account.Credentials.from_service_account_file(CREDS_FILE, scopes=scope)
+    
     # pylint: disable=maybe-no-member
     try:
         service = build("sheets", "v4", credentials=creds)
@@ -204,19 +218,36 @@ def data_processing(driver: webdriver.Edge, level: str):
     return total_completed, total_below, total_incomplete, total_resubmissions
 
 def main():
-    port_urls = [
-    'https://www.hyperiondev.com/portfolio/319063/', 
-    'https://www.hyperiondev.com/portfolio/289469/'
-    ]
+    with open('portfolio_links.txt', 'r') as file:
+        port_urls = [line for line in file.readlines()]
+
+    print('Portfolio URLs Loaded: ', port_urls)
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+
+    creds = service_account.Credentials.from_service_account_file(CREDS_FILE, scopes=scope)
+
+    RANGE = 'Data!A2:Z' 
+    service = build("sheets", "v4", credentials=creds)
+    # Clear the range using the Sheets API
+    request = service.spreadsheets().values().clear(spreadsheetId='1d-7QcJylWTz5rNUjNjMEhPnFzZUaJ3nne3GgpFzJ9yo', range=RANGE)
+    response = request.execute()
+    print('Clearing sheet response: ', response)
 
     pos = 2
 
+    _ = port_urls.pop(0) # Remove heading
+    
     for url in port_urls:
         count = 0
         driver = get_driver(url) # Start new webdriver
         driver = accept_cookies(driver) # Accept cookie prompt        
         student = get_student(driver) # Student identifier details
         level = 'Level 1'
+        
+        if 'Skills' in student.bootcamp:
+            print('Student is DfE...')
+            student.is_dfe
+            
         while count < 4:
             total_completed, total_below, total_incomplete, total_resubmissions = data_processing(driver, level)
             count += 1
@@ -247,7 +278,7 @@ def main():
                     [
                         [
                             str(student.fullname),
-                            str(student.bootcamp),
+                            '[DfE]' + str(student.bootcamp) if 'Skills' in student.bootcamp else str(student.bootcamp),
                             str(level),
                             total_completed,
                             total_incomplete,
@@ -256,6 +287,11 @@ def main():
                         ]
                     ],
                 )
+
+            if 'Skills' in student.bootcamp:
+                print('Student is DfE...')
+                student.is_dfe
+                break
 
             active_nav = driver.find_element(By.XPATH, f"//ul/li[{count}]/a[contains(@class, 'active')]").text
 

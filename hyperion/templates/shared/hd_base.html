@@ -1,12 +1,12 @@
 <!doctype html>
 
-<html lang="en" data-mdb-theme="{{ request.user.userprofile.selected_theme }}">
+<html lang="en" data-mdb-theme="light">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{% block title %}Application - HyperionDev{% endblock %}</title>
+    <title>{% block title %}BR Code - Portal{% endblock %}</title>
 
     {% load static %}
 
@@ -40,41 +40,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.rtl.min.css"
         integrity="sha512-nCfdR2EW/gyEZezb8XCXH9vybKfhwE9Mu3OAhLXXEcVOs6bB0vVHsuxe/X/S4BXgk1LhatmiyGwqfdDN+BqMiA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <style>
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.44);
-            color: white;
-        }
-
-        @media only screen and (max-width: 768px) {
-            .hide-on-mobile {
-                display: none;
-            }
-        }
-    </style>
+    <!-- Bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <!-- Static Site Stylesheet -->
+    <link rel="stylesheet" href="{% static 'site.css'  %}" />
 </head>
 
 <body>
     <header>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary p-0">
             <!-- Container wrapper -->
-            <div class="container">
+            <div class="container-fluid" id="navContainer">
                 {% if user.is_authenticated %}
                 <!-- Navbar brand -->
-                <a class="navbar-brand me-2 p-0 m-0" href="/" title="BR Code - Portal">
-                    {% if request.user.userprofile.selected_theme == 'dark' %}
-                    <img src="{% static 'br-code-dark.gif' %}" height="80" alt="MDB Logo" loading="lazy"
-                        class="rounded-5" style="margin-top: -1px;" />
-                    {% else %}
-                    <img src="{% static 'br-code-light.gif' %}" height="80" alt="MDB Logo" loading="lazy"
+                <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code">
+                    <img src="{% static 'br-code-dark.gif' %}" height="80" width="80" loading="lazy" class="rounded-5"
                         style="margin-top: -1px;" />
-                    {% endif %}
                 </a>
 
                 <!-- Collapsible wrapper -->
@@ -87,11 +69,12 @@
                                 Development</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark"
+                            <a class="btn btn-link fs-6 disabled" data-mdb-ripple-init data-mdb-ripple-color="dark"
                                 href="#">FyreWatch</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark" href="#">SBG
+                            <a class="btn btn-link fs-6 disabled" data-mdb-ripple-init data-mdb-ripple-color="dark"
+                                href="#">SBG
                                 Trader</a>
                         </li>
                     </ul>
@@ -100,6 +83,15 @@
                 <!-- Left links -->
 
                 <!-- Notifications -->
+                <div class="d-flex align-items-center" onclick="toggleTheme()">
+                    <input type="checkbox" class="checkbox" id="checkbox">
+                    <label for="checkbox" class="checkbox-label">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
+                        <span class="ball"></span>
+                    </label>
+                </div>
+
                 <div class="dropdown" hidden>
                     <a data-mdb-dropdown-init data-mdb-ripple-init
                         class="btn btn-floating text-reset me-3 dropdown-toggle hidden-arrow" href="#"
@@ -123,11 +115,11 @@
                 </div>
 
                 <!-- Avatar -->
-                <div class="dropdown">
+                <div class="d-flex align-items-center dropdown">
                     <a data-mdb-dropdown-init data-mdb-ripple-color="dark"
-                        class="btn btn-link text-reset me-3 dropdown-toggle hidden-arrow fs-5" href="#"
+                        class="btn btn-link btn-dark me-3 dropdown-toggle hidden-arrow text-white" href="#"
                         id="navbarDropdownMenuAvatar" role="button" aria-expanded="false" title="Astro Profile">
-                        <i class="fas fa-user-astronaut"> <small>{{ user.username }}</small></i>
+                        <i class="fas fa-user-astronaut"> {{ user.username }}</i>
                         <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
                 alt="Black and White Portrait of a Man" loading="lazy" /> -->
                     </a>
@@ -165,56 +157,57 @@
             </div>
         </nav>
 
-        <main role="main" class="container">
+        <main role="main" class="container mt-5">
             {% block content %}{% endblock %}
         </main>
     </header>
 
-    <footer class="footer hide-on-mobile">
-        <div class="d-flex align-items-center">
-            <div class="p-2 flex-grow-1">
-                <!-- Github -->
-                <a class="btn text-white" data-mdb-ripple-init style="background-color: #333333;"
-                    href="https://github.com/brandenvs" role="button" target="_blank">
-                    <i class="fab fa-github fa-1x"></i>
-                </a>
+    <footer class="footer hide-on-mobile d-flex align-items-center p-0">
 
-                <!-- Linkedin -->
-                <a class="btn text-white" data-mdb-ripple-init style="background-color: #0082ca;" href="www.linkedin.com/in/
+
+        <div class="p-2 flex-grow-1">
+            <!-- Github -->
+            <a class="btn text-white" data-mdb-ripple-init style="background-color: #333333;"
+                href="https://github.com/brandenvs" role="button" target="_blank">
+                <i class="fab fa-github fa-1x"></i>
+            </a>
+
+            <!-- Linkedin -->
+            <a class="btn text-white" data-mdb-ripple-init style="background-color: #0082ca;" href="www.linkedin.com/in/
         branden-developer" role="button" target="_blank">
-                    <i class="fab fa-linkedin-in fa-1x"></i>
-                </a>
+                <i class="fab fa-linkedin-in fa-1x"></i>
+            </a>
 
-                <!-- Whatsapp -->
-                <a class="btn text-white" data-mdb-ripple-init style="background-color: #25d366;"
-                    href="https://wa.me/+270815650206" role="button" target="_blank">
-                    <i class="fab fa-whatsapp fa-1x"></i>
-                </a>
+            <!-- Whatsapp -->
+            <a class="btn text-white" data-mdb-ripple-init style="background-color: #25d366;"
+                href="https://wa.me/+270815650206" role="button" target="_blank">
+                <i class="fab fa-whatsapp fa-1x"></i>
+            </a>
 
-                <!-- Youtube -->
-                <a class="btn text-white" data-mdb-ripple-init style="background-color: #ed302f;"
-                    href="https://youtube.com/@bmasterbranch?si=jAOwoAWuvcPdeWJm" role="button" target="_blank">
-                    <i class="fab fa-youtube fa-1x"></i>
-                </a>
+            <!-- Youtube -->
+            <a class="btn text-white" data-mdb-ripple-init style="background-color: #ed302f;"
+                href="https://youtube.com/@bmasterbranch?si=jAOwoAWuvcPdeWJm" role="button" target="_blank">
+                <i class="fab fa-youtube fa-1x"></i>
+            </a>
 
-                <!-- Dribbble -->
-                <a class="btn text-white" data-mdb-ripple-init style="background-color: #ec4a89;"
-                    href="https://dribbble.com/brandenvs" role="button" target="_blank">
-                    <i class="fab fa-dribbble fa-1x"></i>
-                </a>
+            <!-- Dribbble -->
+            <a class="btn text-white" data-mdb-ripple-init style="background-color: #ec4a89;"
+                href="https://dribbble.com/brandenvs" role="button" target="_blank">
+                <i class="fab fa-dribbble fa-1x"></i>
+            </a>
 
-            </div>
-
-            <!-- Right side -->
-
-            <!-- SearXNG -->
-            <div class="p-2">
-                <a href="https://search.bcodelabs.com/" class="btn btn-secondary"
-                    title="Start a privately hosted internet search session." data-mdb-ripple-init target="_blank">
-                    <i class="fab fa-searchengin fa-1x"></i>
-                </a>
-            </div>
         </div>
+
+        <!-- Right side -->
+
+        <!-- SearXNG -->
+        <div class="p-2">
+            <a href="https://search.bcodelabs.com/" class="btn btn-secondary"
+                title="Start a privately hosted internet search session." data-mdb-ripple-init target="_blank">
+                <i class="fab fa-searchengin fa-1x"></i>
+            </a>
+        </div>
+
     </footer>
 
     <!-- Bootstrap -->
@@ -226,7 +219,14 @@
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.es.min.js"></script>
+    <script type="text/javascript" src="{% static 'site.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
+        window.onload = function () {
+            theme = getTheme();
+        };
+    </script>
     {% block javascript %}{% endblock %}
 </body>
 

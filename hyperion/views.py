@@ -11,9 +11,16 @@ def get_service(request):
     if response_code == 200:
         return HttpResponseRedirect(reverse('hyperion:hd_home'))
 
-def index(request):    
-    if request.user.is_authenticated:      
+def index(request):
+    if request.user.is_authenticated:
         return render(request, 'hd_home.html')
     else:
         return HttpResponseRedirect(reverse('user_auth:login'))
 
+def add_port(request):
+    with open('portfolio_links.txt', 'a') as file:
+        url = request.POST.get('link')
+        file.write('\n' + url)
+    
+    return HttpResponseRedirect(reverse('hyperion:hd_home'))
+    
