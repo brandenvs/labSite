@@ -80,13 +80,10 @@
       <div class="container" id="navContainer">
         {% if user.is_authenticated %}
         <!-- Navbar brand -->
-        <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code - Portal">
-          <img src="{% static 'br-code-dark.gif' %}" height="80" alt="BR Code Logo" loading="lazy" class="rounded-5"
+        <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code">
+          <img src="{% static 'br-code-dark.gif' %}" height="80" width="80" loading="lazy" class="rounded-5"
             style="margin-top: -1px;" />
-          <!-- <img src="{% static 'br-code-light.gif' %}" height="80" alt="Application Logo" loading="lazy"
-            style="margin-top: -1px;" /> -->
         </a>
-
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarButtonsExample">
           <!-- Left links -->
@@ -142,7 +139,7 @@
         </div>
 
         <!-- Avatar -->
-        <div class="dropdown">
+        <div class="d-flex align-items-center dropdown">
           <a data-mdb-dropdown-init data-mdb-ripple-color="dark"
             class="btn btn-link btn-dark me-3 dropdown-toggle hidden-arrow text-white" href="#"
             id="navbarDropdownMenuAvatar" role="button" aria-expanded="false" title="Astro Profile">

@@ -1,0 +1,75 @@
+{% extends './shared/portal_base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+<div class="d-flex justify-content-center m-4">
+    <form action="{% url 'portal:create_app' %}" id="myForm" method="post">
+        {% csrf_token %}
+        <h2>Create a New Application</h2>
+
+        <div class="field">
+            {% if message %}
+            <div class="toast align-items-center m-2 bg-danger text-white" role="alert" aria-live="assertive"
+                aria-atomic="true" id="errorToast">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ message }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            {% elif success_message %}
+            <div class="toast align-items-center m-2 bg-success text-white" role="alert" aria-live="assertive"
+                aria-atomic="true" id="errorToast">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ success_message }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="field">
+            <label class="label text-dark text-end">App Title</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Application Title" name="title" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user-astronaut"></i>
+                </span>
+            </div>
+        </div>
+        <div class="">
+            <!-- <label class="label text-dark text-end">Select Icon</label> -->
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <select data-mdb-select-init class="select" name="icon_id">
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+                <option value="4">Four</option>
+                <option value="5">Five</option>
+                <option value="6">Six</option>
+                <option value="7">Seven</option>
+                <option value="8">Eight</option>
+            </select>
+        </div>
+        <div class="field">
+            <label class="label text-dark text-end">GitHub Repository</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="GitHub repo url" name="github_repository" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                </span>
+            </div>
+        </div>
+        <!-- Submit -->
+        <input type="submit" class="btn btn-outline-info mb-3" value="Create" />
+    </form>
+</div>
+
+{% endblock %}

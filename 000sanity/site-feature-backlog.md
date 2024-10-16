@@ -1,5 +1,16 @@
 # Site Feature - Backlog
 
+## HyperionDev #01
+
+> ### Student Progression Tracker
+>
+> - [ ] List loaded student portfolio URLs.
+> - [ ] CRUD Functionality for student portfolios.
+>
+
+**DEPLOY**
+---
+
 ## Portal #02
 
 > ### Application Manager
@@ -25,12 +36,6 @@
 > - [ ] Build **Message Board** webpage.
 > - [ ] Mobile responsive.
 >
-
-## WakaTime Integration #02
-
-> ### (portal) Application
-> 
-> - [ ] 
 
 ## TODO
 

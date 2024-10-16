@@ -3,6 +3,9 @@
 
 /static/
 
+
+nginx
+
 db.sqlite3
 
 # .env

@@ -40,7 +40,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.rtl.min.css"
     integrity="sha512-nCfdR2EW/gyEZezb8XCXH9vybKfhwE9Mu3OAhLXXEcVOs6bB0vVHsuxe/X/S4BXgk1LhatmiyGwqfdDN+BqMiA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <!-- Bulma -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
   <!-- Static Site Stylesheet -->
   <link rel="stylesheet" href="{% static 'site.css'  %}" />
 </head>
@@ -53,11 +54,9 @@
       <div class="container-fluid" id="navContainer">
         {% if user.is_authenticated %}
         <!-- Navbar brand -->
-        <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code - Portal">
-          <img src="{% static 'br-code-dark.gif' %}" height="80" alt="BR Code Logo" loading="lazy" class="rounded-5"
+        <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code">
+          <img src="{% static 'br-code-dark.gif' %}" height="80" width="80" loading="lazy" class="rounded-5"
             style="margin-top: -1px;" />
-          <!-- <img src="{% static 'br-code-light.gif' %}" height="80" alt="Application Logo" loading="lazy"
-            style="margin-top: -1px;" /> -->
         </a>
 
         <!-- Collapsible wrapper -->
@@ -65,7 +64,7 @@
           <!-- Left links -->
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="btn btn-link fs-6 disabled" data-mdb-ripple-init data-mdb-ripple-color="dark"
+              <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark"
                 href="{% url 'hyperion:hd_home' %}">Hyperion
                 Development</a>
             </li>
@@ -115,7 +114,7 @@
         </div>
 
         <!-- Avatar -->
-        <div class="dropdown">
+        <div class="d-flex align-items-center dropdown">
           <a data-mdb-dropdown-init data-mdb-ripple-color="dark"
             class="btn btn-link btn-dark me-3 dropdown-toggle hidden-arrow text-white" href="#"
             id="navbarDropdownMenuAvatar" role="button" aria-expanded="false" title="Astro Profile">
@@ -161,83 +160,52 @@
     </main>
   </header>
 
-  <footer class="footer hide-on-mobile">
-    <section class="text-center m-4" hidden>
-      <div class="row">
-        <div class="col-lg-3 col-md-6 mb-5 mb-md-5 mb-lg-0 position-relative">
-          <i class="fas fa-cubes fa-3x text-primary mb-4"></i>
-          <h5 class="text-primary fw-bold mb-3">1000+</h5>
-          <h6 class="fw-normal mb-0">Coffees Drank</h6>
-        </div>
+  <footer class="footer hide-on-mobile d-flex align-items-center p-0">
 
-        <div class="col-lg-3 col-md-6 mb-5 mb-md-5 mb-lg-0 position-relative">
-          <i class="fas fa-layer-group fa-3x text-primary mb-4"></i>
-          <h5 class="text-primary fw-bold mb-3">673+</h5>
-          <h6 class="fw-normal mb-0">GitHub Contributions
-          </h6>
-          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
-        </div>
 
-        <div class="col-lg-3 col-md-6 mb-5 mb-md-0 position-relative">
-          <i class="fas fa-image fa-3x text-primary mb-4"></i>
-          <h5 class="text-primary fw-bold mb-3">100+</h5>
-          <h6 class="fw-normal mb-0">Templates</h6>
-          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
-        </div>
+    <div class="p-2 flex-grow-1">
+      <!-- Github -->
+      <a class="btn text-white" data-mdb-ripple-init style="background-color: #333333;"
+        href="https://github.com/brandenvs" role="button" target="_blank">
+        <i class="fab fa-github fa-1x"></i>
+      </a>
 
-        <div class="col-lg-3 col-md-6 mb-5 mb-md-0 position-relative">
-          <i class="fas fa-plug fa-3x text-primary mb-4"></i>
-          <h5 class="text-primary fw-bold mb-3">28</h5>
-          <h6 class="fw-normal mb-0">Plugins</h6>
-          <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
-        </div>
-      </div>
-    </section>
-    <div class="d-flex align-items-center">
-
-      <div class="p-2 flex-grow-1">
-        <!-- Github -->
-        <a class="btn text-white" data-mdb-ripple-init style="background-color: #333333;"
-          href="https://github.com/brandenvs" role="button" target="_blank">
-          <i class="fab fa-github fa-1x"></i>
-        </a>
-
-        <!-- Linkedin -->
-        <a class="btn text-white" data-mdb-ripple-init style="background-color: #0082ca;" href="www.linkedin.com/in/
+      <!-- Linkedin -->
+      <a class="btn text-white" data-mdb-ripple-init style="background-color: #0082ca;" href="www.linkedin.com/in/
         branden-developer" role="button" target="_blank">
-          <i class="fab fa-linkedin-in fa-1x"></i>
-        </a>
+        <i class="fab fa-linkedin-in fa-1x"></i>
+      </a>
 
-        <!-- Whatsapp -->
-        <a class="btn text-white" data-mdb-ripple-init style="background-color: #25d366;"
-          href="https://wa.me/+270815650206" role="button" target="_blank">
-          <i class="fab fa-whatsapp fa-1x"></i>
-        </a>
+      <!-- Whatsapp -->
+      <a class="btn text-white" data-mdb-ripple-init style="background-color: #25d366;"
+        href="https://wa.me/+270815650206" role="button" target="_blank">
+        <i class="fab fa-whatsapp fa-1x"></i>
+      </a>
 
-        <!-- Youtube -->
-        <a class="btn text-white" data-mdb-ripple-init style="background-color: #ed302f;"
-          href="https://youtube.com/@bmasterbranch?si=jAOwoAWuvcPdeWJm" role="button" target="_blank">
-          <i class="fab fa-youtube fa-1x"></i>
-        </a>
+      <!-- Youtube -->
+      <a class="btn text-white" data-mdb-ripple-init style="background-color: #ed302f;"
+        href="https://youtube.com/@bmasterbranch?si=jAOwoAWuvcPdeWJm" role="button" target="_blank">
+        <i class="fab fa-youtube fa-1x"></i>
+      </a>
 
-        <!-- Dribbble -->
-        <a class="btn text-white" data-mdb-ripple-init style="background-color: #ec4a89;"
-          href="https://dribbble.com/brandenvs" role="button" target="_blank">
-          <i class="fab fa-dribbble fa-1x"></i>
-        </a>
+      <!-- Dribbble -->
+      <a class="btn text-white" data-mdb-ripple-init style="background-color: #ec4a89;"
+        href="https://dribbble.com/brandenvs" role="button" target="_blank">
+        <i class="fab fa-dribbble fa-1x"></i>
+      </a>
 
-      </div>
-
-      <!-- Right side -->
-
-      <!-- SearXNG -->
-      <div class="p-2">
-        <a href="https://search.bcodelabs.com/" class="btn btn-secondary"
-          title="Start a privately hosted internet search session." data-mdb-ripple-init target="_blank">
-          <i class="fab fa-searchengin fa-1x"></i>
-        </a>
-      </div>
     </div>
+
+    <!-- Right side -->
+
+    <!-- SearXNG -->
+    <div class="p-2">
+      <a href="https://search.bcodelabs.com/" class="btn btn-secondary"
+        title="Start a privately hosted internet search session." data-mdb-ripple-init target="_blank">
+        <i class="fab fa-searchengin fa-1x"></i>
+      </a>
+    </div>
+
   </footer>
 
   <!-- Bootstrap -->
