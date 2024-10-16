@@ -2,15 +2,16 @@
 
 {% block content %}
 <div class="row g-2">
-    <div class="col">
+    <div class="col-md-9 col-12">
         <div class="d-flex align-items-center">
             <div class="spinner-border" role="status" id="spinner">
                 <span class="visually-hidden">Loading...</span>
             </div>
-            <div class="flex-shrink-0" id="studentIframe">
+            <div id="response"></div>
+            <div class="flex-shrink-0" id="studentIframe" style="width: 100%; overflow: hidden;">
                 <iframe
                     src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"
-                    width="1000" height="500"></iframe>
+                    style="width: 100%; height: auto; border: none;"></iframe>
             </div>
         </div>
     </div>
@@ -64,13 +65,15 @@
             $('#spinner').show();
             $('#studentIframe').hide();
 
+
             $.ajax({
                 url: '{% url "hyperion:student_tracker" %}',
                 method: 'GET',
                 success: function (response) {
+                    window.location.reload(true);
+                    $('#studentIframe').show();
+                    $('#response').html('Successfully Finished Syncing!');
 
-                    $('#spinner').hide();
-                    $('#response').html('Response from server: ' + response);
                 },
                 error: function (xhr, status, error) {
                     $('#spinner').hide();
