@@ -9,10 +9,7 @@
     --greyDark: #9baacf;
     --greenLight: #7ae77f;
     --greenLight-2: #aefcb2;
-
-
 }
-
 
 .btn_shadow {
     width: 15rem;
@@ -40,6 +37,19 @@
     .hide-on-mobile {
         display: none;
     }
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+
+.content {
+    text-align: center;
 }
 
 body.dark {
@@ -75,6 +85,15 @@ body.dark #app {
 body.dark #v-pills-tabContent {
     background-color: #505462;
     color: white;
+}
+
+.card-body {
+    background-color: #E4EBF5;
+    color: black;
+}
+
+.frame {
+    width: 100%;
 }
 
 body.dark .card-body {

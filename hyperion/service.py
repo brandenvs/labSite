@@ -17,6 +17,8 @@ from googleapiclient.errors import HttpError
 
 from labSite.settings import CREDS_FILE
 
+from .models import dbStudent
+
 
 class Student:
     def __init__(self, student_name, bootcamp, current_level=0, is_dfe=False):
@@ -57,12 +59,13 @@ def get_driver(port_url: str) -> webdriver.Edge:
 # Click accept cookies
 def accept_cookies(driver: webdriver.Edge) -> webdriver.Edge:
     print('⌛Waiting for element ...')
+
     # Waiting until an element is clickable
     accept_cookie = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll')))
     accept_cookie.click()
 
     print('💤Sleeping for 1 seconds ...')
-    time.sleep(1)# Snooze 2
+    time.sleep(1)  # Snooze 2
 
     return driver    
 
@@ -72,13 +75,24 @@ def get_student(driver: webdriver.Edge) -> Student:
         EC.presence_of_element_located((By.TAG_NAME, 'body'))  # Waits for the body tag to be loaded
     )
     print("Page is fully loaded.")
-    
+
     # Locate student details
     student_name = driver.find_element(By.CLASS_NAME, 'profile__excerpt-fullname').text
     bootcamp = driver.find_element(By.CLASS_NAME, 'profile__excerpt-bootcamp-level').text
     print('Loaded Student: ', student_name)
 
     student = Student(student_name, bootcamp)
+
+    db_student = dbStudent.objects.filter(fullname=student_name)
+
+    if db_student:
+        pass
+
+    else:
+        db_student = dbStudent(
+            fullname=student_name,
+            bootcamp=bootcamp,
+        ).save()
 
     return student
 
@@ -226,11 +240,14 @@ def main():
 
     creds = service_account.Credentials.from_service_account_file(CREDS_FILE, scopes=scope)
 
-    RANGE = 'Data!A2:Z' 
+    RANGE = 'Data!A2:Z'
     service = build("sheets", "v4", credentials=creds)
+
     # Clear the range using the Sheets API
     request = service.spreadsheets().values().clear(spreadsheetId='1d-7QcJylWTz5rNUjNjMEhPnFzZUaJ3nne3GgpFzJ9yo', range=RANGE)
+
     response = request.execute()
+
     print('Clearing sheet response: ', response)
 
     pos = 2
@@ -278,7 +295,7 @@ def main():
                     [
                         [
                             str(student.fullname),
-                            '[DfE]' + str(student.bootcamp) if 'Skills' in student.bootcamp else str(student.bootcamp),
+                            '[DfE] ' + str(student.bootcamp) if 'Skills' in student.bootcamp else str(student.bootcamp),
                             str(level),
                             total_completed,
                             total_incomplete,

@@ -2,6 +2,9 @@
 
 {% block content %}
 <div class="row g-2">
+    <div class="col-12">
+        <h4>Student Progression Tracker</h4>
+    </div>
     <div class="col-md-9 col-12">
         <div class="d-flex align-items-center">
             <div class="spinner-border" role="status" id="spinner">
@@ -9,46 +12,64 @@
             </div>
             <div id="response"></div>
             <div class="flex-shrink-0" id="studentIframe" style="width: 100%; overflow: hidden;">
-                <iframe
-                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"
-                    style="width: 100%; height: auto; border: none;"></iframe>
+                <iframe class="frame"
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
             </div>
         </div>
     </div>
-    <div class="col align-self-stretch">
+    <div class="col-md-3 col-12">
         <div class="flex-grow-1 ms-3">
             {% if user.is_authenticated %}
             <a class="btn btn-primary mb-3" href="#!" id="syncStudents">Sync Students</a>
-            <a class="btn btn-secondary mb-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop"
-                aria-controls="offcanvasTop">Add Portfolio</a>
+            <a class="btn btn-secondary mb-3" data-bs-toggle="offcanvas" data-bs-target="#managePorts"
+                aria-controls="managePorts">Manage Portfolios</a>
             {% endif %}
         </div>
     </div>
 </div>
 
 <div class="d-flex justify-content-center m-4">
-    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="managePorts" aria-labelledby="managePortsLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasTopLabel">Adding Student Portfolio to Tracker:</h5>
+            <h5 class="offcanvas-title" id="managePortsLabel">Manage Student Portfolios</h5>
 
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close text-black" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <form action="{% url 'hyperion:add_port' %}" method="post">
-                {% csrf_token %}
-
-                <div class="field">
-                    <label class="label text-dark text-end">Portfolio URL</label>
-                    <div class="control has-icons-left has-icons-right">
-                        <input class="input bg-dark" type="text"
-                            placeholder="https://www.hyperiondev.com/portfolio/00000/" name="link" required>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-user-astronaut"></i>
-                        </span>
-                    </div>
+            <div class="row">
+                <div class="col">
+                    <p class="fw-bold fs-3 text-black">Add student portfolio</p>
+                    <form action="{% url 'hyperion:add_port' %}" method="post">
+                        {% csrf_token %}
+                        <div class="field">
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input bg-dark" type="text"
+                                    placeholder="https://www.hyperiondev.com/portfolio/00000/" name="link" required>
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user-astronaut"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Add">
+                    </form>
                 </div>
-                <input type="submit" class="btn btn-primary" value="Add">
-            </form>
+                <div class="col">
+                    <p class="fw-bold fs-2 text-black">Remove student portfolio</p>
+                    <ul class="list-group">
+                        {% for db_student in db_students %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ db_student.fullname }}
+
+                            <button type="button" onclick="deletePort('{{ db_student.fullname }}')"
+                                class="badge text-bg-danger rounded-pill">
+                                <i class="far fa-trash-can fa-2x"></i>
+                            </button>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
