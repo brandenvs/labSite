@@ -83,17 +83,6 @@ def get_student(driver: webdriver.Edge) -> Student:
 
     student = Student(student_name, bootcamp)
 
-    db_student = dbStudent.objects.filter(fullname=student_name)
-
-    if db_student:
-        pass
-
-    else:
-        db_student = dbStudent(
-            fullname=student_name,
-            bootcamp=bootcamp,
-        ).save()
-
     return student
 
 # Get task table
@@ -232,10 +221,8 @@ def data_processing(driver: webdriver.Edge, level: str):
     return total_completed, total_below, total_incomplete, total_resubmissions
 
 def main():
-    with open('portfolio_links.txt', 'r') as file:
-        port_urls = [line for line in file.readlines()]
-
-    print('Portfolio URLs Loaded: ', port_urls)
+    port_urls = dbStudent.objects.values_list('portfolio_url', flat=True)    
+    
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
     creds = service_account.Credentials.from_service_account_file(CREDS_FILE, scopes=scope)
@@ -244,17 +231,17 @@ def main():
     service = build("sheets", "v4", credentials=creds)
 
     # Clear the range using the Sheets API
-    request = service.spreadsheets().values().clear(spreadsheetId='1d-7QcJylWTz5rNUjNjMEhPnFzZUaJ3nne3GgpFzJ9yo', range=RANGE)
+    request = service.spreadsheets().values() \
+    .clear(spreadsheetId='1d-7QcJylWTz5rNUjNjMEhPnFzZUaJ3nne3GgpFzJ9yo', range=RANGE)
 
     response = request.execute()
 
     print('Clearing sheet response: ', response)
 
     pos = 2
-
-    _ = port_urls.pop(0) # Remove heading
     
     for url in port_urls:
+        print('Loaded URL: ', url)
         count = 0
         driver = get_driver(url) # Start new webdriver
         driver = accept_cookies(driver) # Accept cookie prompt        
@@ -304,6 +291,15 @@ def main():
                         ]
                     ],
                 )
+
+            try:
+                db_student = dbStudent.objects.get(portfolio_url=url, fullname='not-set')
+                if db_student:
+                    db_student.fullname = student.fullname
+                    db_student.bootcamp = student.bootcamp
+                    db_student.save()  # Save the changes to the database
+            except:
+                print('Student already has properties set: ', student.fullname)
 
             if 'Skills' in student.bootcamp:
                 print('Student is DfE...')

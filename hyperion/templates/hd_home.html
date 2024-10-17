@@ -12,8 +12,7 @@
             </div>
             <div id="response"></div>
             <div class="flex-shrink-0" id="studentIframe" style="width: 100%; overflow: hidden;">
-                <iframe class="frame"
-                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                <iframe id="googleSheetFrame" class="frame" src="" width="100%" height="500"></iframe>
             </div>
         </div>
     </div>
@@ -38,23 +37,25 @@
         <div class="offcanvas-body">
             <div class="row">
                 <div class="col">
-                    <p class="fw-bold fs-3 text-black">Add student portfolio</p>
+                    <p class="fw-bold fs-4 text-black">Add student portfolio</p>
                     <form action="{% url 'hyperion:add_port' %}" method="post">
                         {% csrf_token %}
+
                         <div class="field">
-                            <div class="control has-icons-left has-icons-right">
-                                <input class="input bg-dark" type="text"
-                                    placeholder="https://www.hyperiondev.com/portfolio/00000/" name="link" required>
-                                <span class="icon is-small is-left">
-                                    <i class="fas fa-user-astronaut"></i>
-                                </span>
+                            <div class="control input-group mb-3">
+                                <input type="text" class="form-control"
+                                    placeholder="https://www.hyperiondev.com/portfolio/00000/"
+                                    aria-label="Recipient's username" aria-describedby="addPort" name="link" required>
+                                <input type="submit" class="btn btn-outline-secondary bg-info" value="Add" id="addPort">
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Add">
+                        <div class="spinner-border" role="status" id="spinner2">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                     </form>
                 </div>
                 <div class="col">
-                    <p class="fw-bold fs-2 text-black">Remove student portfolio</p>
+                    <p class="fw-bold fs-4 text-black">Remove student portfolio</p>
                     <ul class="list-group">
                         {% for db_student in db_students %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -81,6 +82,7 @@
 <script>
     $(document).ready(function () {
         $('#spinner').hide();
+        $('#spinner2').hide();
 
         $('#syncStudents').on('click', function () {
             $('#spinner').show();
@@ -102,38 +104,18 @@
                 }
             });
         });
+
+        $('#addPort').on('click', function () {
+            $('#spinner2').show();
+            $('#addPort').hide();
+        });
     });
 </script>
+<script>
+    const iframe = document.getElementById('googleSheetFrame');
+    const baseSrc = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&single=true&widget=true&headers=false";
 
-<!-- Time Counter -->
-<script type="text/javascript">
-    // Set the date we're counting down to
-    var countDownDate = new Date();
-    countDownDate.setDate(countDownDate.getDate() + 30);
-
-    // Update the count down every 1 second
-    var x = setInterval(function () {
-        // Get todays date and time
-        var now = new Date().getTime();
-
-        // Find the distance between now an the count down date
-        var distance = countDownDate - now;
-
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the result in the element with id="demo"
-        document.getElementById('time-counter').innerHTML =
-            days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
-
-        // If the count down is finished, write some text
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById('time-counter').innerHTML = 'EXPIRED';
-        }
-    }, 1000);
+    // Append a cache-busting parameter (timestamp)
+    iframe.src = `${baseSrc}&cachebuster=${new Date().getTime()}`;
 </script>
 {% endblock %}

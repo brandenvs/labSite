@@ -46,9 +46,11 @@ function toggleTheme() {
     });
     return selectedTheme;
 }
+
 function getCSRFToken() {
     return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 }
+
 function deletePort(fullname) {
     // AJAX request to trigger backend operation
     $.ajax({
