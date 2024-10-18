@@ -18,6 +18,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'hyperion',
     'portal',
     'user_auth',

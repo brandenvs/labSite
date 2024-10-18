@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}🗝️ Login{% endblock %}
+
+<!--Body Content-->
+{% block content %}
+<div class="d-flex justify-content-center m-4">
+    <form action="{% url 'users:login' %}" id="myForm" method="post">
+        {% csrf_token %}
+        <h2>Login</h2>
+
+        <div class="field">
+            {% if message %}
+            <div class="toast align-items-center m-2 bg-danger text-white" role="alert" aria-live="assertive"
+                aria-atomic="true" id="errorToast">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ message }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            {% elif success_message %}
+            <div class="toast align-items-center m-2 bg-success text-white" role="alert" aria-live="assertive"
+                aria-atomic="true" id="errorToast">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ success_message }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="field">
+            <label class="label text-dark text-end">Username</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Astro username" name="username" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user-astronaut"></i>
+                </span>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label text-dark text-end">Password</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input" type="password" placeholder="Password" name="password" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                </span>
+            </div>
+        </div>
+        <div class="field" id="submitBtn">
+            <!-- Submit -->
+            <input type="submit" class="btn btn-outline-info mb-3" value="Login" />
+            <div class="spinner-border" role="status" id="spinner" style="display: none;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

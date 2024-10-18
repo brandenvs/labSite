@@ -20,6 +20,5 @@ urlpatterns = [
     path('logout-user/', views.logout_user, name='logout_user'),
     # Theme toggler
     path('toggle-theme/', views.toggle_theme, name='toggle_theme'),
-    path('fetch-theme/', views.get_theme, name='get_theme')
-    
+    path('fetch-theme/', views.get_theme, name='get_theme'),
 ]
