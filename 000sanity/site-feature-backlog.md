@@ -4,8 +4,8 @@
 
 > ### Student Progression Tracker
 >
-> - [ ] List loaded student portfolio URLs.
-> - [ ] CRUD Functionality for student portfolios.
+> - [x] List loaded student portfolio URLs.
+> - [x] CRUD Functionality for student portfolios.
 >
 
 **DEPLOY**
